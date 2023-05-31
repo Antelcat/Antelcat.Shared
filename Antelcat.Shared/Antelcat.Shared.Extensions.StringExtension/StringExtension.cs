@@ -1,5 +1,7 @@
-﻿namespace Antelcat.Foundation.Core.Extensions;
+﻿using System;
 
+namespace Antelcat.Foundation.Core.Extensions;
+#nullable enable
 public static partial class StringExtension
 {
     public static string ToUpperCamelCase(this string value) =>
