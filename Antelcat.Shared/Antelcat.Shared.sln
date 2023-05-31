@@ -82,7 +82,6 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Antelcat.Shared.Extensions.TaskExtension\Antelcat.Shared.Extensions.TaskExtension.projitems*{06023305-dcf7-4dc6-93de-b686f35c000e}*SharedItemsImports = 13
 		Antelcat.Shared.DependencyInjection.Autowired\Antelcat.Shared.DependencyInjection.Autowired.projitems*{085d4754-669a-4964-94cc-18b568864cdc}*SharedItemsImports = 5
-		Antelcat.Shared.Extensions.EnumExtension\Antelcat.Shared.Extensions.EnumExtension.projitems*{085d4754-669a-4964-94cc-18b568864cdc}*SharedItemsImports = 5
 		Antelcat.Shared.Extensions.LinqExtension\Antelcat.Shared.Extensions.LinqExtension.projitems*{085d4754-669a-4964-94cc-18b568864cdc}*SharedItemsImports = 5
 		Antelcat.Shared.Extensions.ServiceExtension\Antelcat.Shared.Extensions.ServiceExtension.projitems*{085d4754-669a-4964-94cc-18b568864cdc}*SharedItemsImports = 5
 		Antelcat.Shared.Extensions.StringExtension\Antelcat.Shared.Extensions.StringExtension.projitems*{085d4754-669a-4964-94cc-18b568864cdc}*SharedItemsImports = 5
