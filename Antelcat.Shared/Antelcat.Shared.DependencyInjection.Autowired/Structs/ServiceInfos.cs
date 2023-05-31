@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Antelcat.Extensions;
-using Antelcat.Foundation.Core.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Antelcat.Structs;
