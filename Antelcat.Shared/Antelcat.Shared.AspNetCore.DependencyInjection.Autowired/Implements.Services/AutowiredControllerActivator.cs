@@ -33,15 +33,6 @@ public abstract class ControllerActivatorBase<TServiceProvider> : IControllerAct
     }
 }
 
-public class TransientAutowiredControllerActivator<TAttribute> 
-    : ControllerActivatorBase<TransientAutowiredServiceProvider<TAttribute>> 
-    where TAttribute : Attribute
-{
-    protected override TransientAutowiredServiceProvider<TAttribute> ProvideService(
-        IServiceProvider provider) =>
-        new(provider);
-}
-
 public class AutowiredControllerActivator<TAttribute> 
     : ControllerActivatorBase<AutowiredServiceProvider<TAttribute>> 
     where TAttribute : Attribute
