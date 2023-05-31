@@ -44,7 +44,7 @@ public abstract class CachedAutowiredServiceProvider<TAttribute>
     /// <summary>
     /// 共享的缓存数据
     /// </summary>
-    protected ServiceInfos SharedInfos { get; }
+    internal ServiceInfos SharedInfos { get; }
 
     private const BindingFlags Flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 
@@ -121,15 +121,15 @@ public class AutowiredServiceProvider<TAttribute>
     : CachedAutowiredServiceProvider<TAttribute>
     where TAttribute : Attribute
 {
-    private AutowiredServiceProvider(IServiceProvider serviceProvider, ServiceInfos serviceInfos)
+    internal AutowiredServiceProvider(IServiceProvider serviceProvider, ServiceInfos serviceInfos)
         : base(serviceProvider, serviceInfos) { }
 
     private AutowiredServiceProvider(IServiceProvider serviceProvider,
-        Dictionary<Type, ServiceLifetime> serviceLifetimes) : base(serviceProvider) =>
-        SharedInfos.ServiceLifetimes = serviceLifetimes;
+        Func<Dictionary<Type, ServiceLifetime>> serviceLifetimes) : base(serviceProvider) =>
+        SharedInfos.ServiceLifetimes = new Lazy<Dictionary<Type, ServiceLifetime>>(serviceLifetimes);
 
     public AutowiredServiceProvider(IServiceProvider serviceProvider, IServiceCollection collection)
-        : this(serviceProvider, collection
+        : this(serviceProvider, () => collection
             .Aggregate(new Dictionary<Type, ServiceLifetime>(), (d, s) =>
             {
 #if NETSTANDARD2_0_OR_GREATER
@@ -221,9 +221,9 @@ public class AutowiredServiceProvider<TAttribute>
     }
 
     private bool TryGetServiceLifetime(Type serviceType,  out ServiceLifetime serviceLifetime) =>
-        SharedInfos.ServiceLifetimes!.TryGetValue(serviceType, out serviceLifetime)
+        SharedInfos.ServiceLifetimes!.Value.TryGetValue(serviceType, out serviceLifetime)
         || serviceType.IsGenericType
-        && SharedInfos.ServiceLifetimes!.TryGetValue(serviceType.GetGenericTypeDefinition(),
+        && SharedInfos.ServiceLifetimes.Value.TryGetValue(serviceType.GetGenericTypeDefinition(),
             out serviceLifetime);
 }
 

@@ -31,14 +31,15 @@ public static partial class ServiceExtension
             ServiceCollectionContainerBuilderExtensions.BuildServiceProvider));
 
     /// <summary>
-    /// 将 <see cref="IControllerActivator"/> 的实现替换为 <see cref="AutowiredControllerActivator{AutowiredAttribute}"/> ,
+    /// 将 <see cref="IControllerActivator"/> 的实现替换为 <see cref="AutowiredControllerActivator{TAttribute}"/> ,
     /// 且应当在 <see cref="MvcCoreMvcBuilderExtensions.AddControllersAsServices"/> 之后调用
     /// </summary>
     /// <param name="collection"></param>
     /// <returns></returns>
     public static IServiceCollection UseAutowiredControllers(this IMvcBuilder collection)
         => collection.Services.Replace(ServiceDescriptor
-            .Transient<IControllerActivator, AutowiredControllerActivator<AutowiredAttribute>>());
+            .Transient<IControllerActivator>(s =>
+                new AutowiredControllerActivator<AutowiredAttribute>(collection.Services)));
 
     /// <summary>
     /// 将 <see cref="IControllerActivator"/> 的实现替换为 <see cref="AutowiredControllerActivator{TAttribute}"/> ,
@@ -50,5 +51,6 @@ public static partial class ServiceExtension
     public static IServiceCollection UseAutowiredControllers<TAttribute>(this IMvcBuilder collection)
         where TAttribute : Attribute
         => collection.Services.Replace(ServiceDescriptor
-            .Transient<IControllerActivator, AutowiredControllerActivator<TAttribute>>());
+            .Transient<IControllerActivator>(s =>
+                new AutowiredControllerActivator<AutowiredAttribute>(collection.Services)));
 }

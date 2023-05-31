@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Reflection.Metadata.Ecma335;
+using Antelcat.Structs;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -31,7 +33,7 @@ public abstract class ControllerActivatorBase<TServiceProvider> : IControllerAct
     }
 }
 
-public class AutowiredControllerActivator<TAttribute> 
+public class TransientAutowiredControllerActivator<TAttribute> 
     : ControllerActivatorBase<TransientAutowiredServiceProvider<TAttribute>> 
     where TAttribute : Attribute
 {
@@ -39,3 +41,29 @@ public class AutowiredControllerActivator<TAttribute>
         IServiceProvider provider) =>
         new(provider);
 }
+
+public class AutowiredControllerActivator<TAttribute> 
+    : ControllerActivatorBase<AutowiredServiceProvider<TAttribute>> 
+    where TAttribute : Attribute
+{
+    private readonly IServiceCollection collection;
+    private ServiceInfos? sharedInfos;
+    public AutowiredControllerActivator(IServiceCollection collection) => this.collection = collection;
+
+    protected override AutowiredServiceProvider<TAttribute> ProvideService(
+        IServiceProvider provider)
+    {
+        AutowiredServiceProvider<TAttribute> ret;
+        if (sharedInfos == null)
+        {
+            ret = new AutowiredServiceProvider<TAttribute>(provider, collection);
+            sharedInfos = ret.SharedInfos;
+        }
+        else
+        {
+            ret = new AutowiredServiceProvider<TAttribute>(provider, sharedInfos);
+        }
+        return ret;
+    }
+}
+

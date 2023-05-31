@@ -17,7 +17,7 @@ public class ServiceInfos
     /// <summary>
     /// 缓存的服务生命周期
     /// </summary>
-    public Dictionary<Type, ServiceLifetime>? ServiceLifetimes { get; set; }
+    public Lazy<Dictionary<Type, ServiceLifetime>>? ServiceLifetimes { get; set; }
     
     /// <summary>
     /// 缓存的实现类的属性字段映射器
