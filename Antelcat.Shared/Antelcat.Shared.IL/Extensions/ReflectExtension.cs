@@ -1,8 +1,10 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Linq;
+using System.Reflection;
 using System.Reflection.Emit;
 
 namespace Antelcat.Extensions;
-
+#nullable enable
 #region Delegates
 
 public delegate void Setter<TTarget, in TIn>(ref TTarget? target, TIn? value);
