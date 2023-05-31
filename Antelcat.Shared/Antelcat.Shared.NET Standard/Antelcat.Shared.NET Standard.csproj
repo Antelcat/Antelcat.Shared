@@ -21,5 +21,7 @@
     <Import Project="..\Antelcat.Shared.DependencyInjection.Autowired\Antelcat.Shared.DependencyInjection.Autowired.projitems" Label="Shared" />
     <Import Project="..\Antelcat.Shared.Runtime.CompileService\Antelcat.Shared.Runtime.CompileService.projitems" Label="Shared" />
     <Import Project="..\Antelcat.Shared.Extensions.LinqExtension\Antelcat.Shared.Extensions.LinqExtension.projitems" Label="Shared" />
+    <Import Project="..\Antelcat.Shared.Extensions.TimeExtension\Antelcat.Shared.Extensions.TimeExtension.projitems" Label="Shared" />
+    <Import Project="..\Antelcat.Shared.Extensions.TaskExtension\Antelcat.Shared.Extensions.TaskExtension.projitems" Label="Shared" />
 
 </Project>

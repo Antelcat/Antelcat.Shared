@@ -1,4 +1,7 @@
 ﻿namespace Antelcat.Extensions;
+#if !NETSTANDARD && !NET
+using System;
+#endif
 
 public static class TimeExtension
 {

@@ -26,4 +26,8 @@
 
     <Import Project="..\Antelcat.Shared.AspNetCore.DependencyInjection.Autowired\Antelcat.Shared.AspNetCore.DependencyInjection.Autowired.projitems" Label="Shared" />
 
+    <Import Project="..\Antelcat.Shared.Extensions.TimeExtension\Antelcat.Shared.Extensions.TimeExtension.projitems" Label="Shared" />
+
+    <Import Project="..\Antelcat.Shared.Extensions.TaskExtension\Antelcat.Shared.Extensions.TaskExtension.projitems" Label="Shared" />
+
 </Project>

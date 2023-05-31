@@ -65,6 +65,8 @@
   <Import Project="..\Antelcat.Shared.DependencyInjection.Autowired\Antelcat.Shared.DependencyInjection.Autowired.projitems" Label="Shared" />
   <Import Project="..\Antelcat.Shared.Runtime.CompileService\Antelcat.Shared.Runtime.CompileService.projitems" Label="Shared" />
   <Import Project="..\Antelcat.Shared.Extensions.LinqExtension\Antelcat.Shared.Extensions.LinqExtension.projitems" Label="Shared" />
+  <Import Project="..\Antelcat.Shared.Extensions.TimeExtension\Antelcat.Shared.Extensions.TimeExtension.projitems" Label="Shared" />
+  <Import Project="..\Antelcat.Shared.Extensions.TaskExtension\Antelcat.Shared.Extensions.TaskExtension.projitems" Label="Shared" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
     <Target Name="BeforeBuild">
