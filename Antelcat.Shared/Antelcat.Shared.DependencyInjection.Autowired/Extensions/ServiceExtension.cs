@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using Antelcat.Implements.Services;
 using Antelcat.Attributes;
 namespace Antelcat.Extensions;
