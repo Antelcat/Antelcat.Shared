@@ -1,11 +1,14 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 using Antelcat.Extensions;
 using Antelcat.Structs;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Antelcat.Implements.Services;
-
+#nullable enable
 using SetterCache = Tuple<Type, Setter<object, object>>;
 
 public abstract class ProxiedServiceProvider
@@ -125,7 +128,13 @@ public class AutowiredServiceProvider<TAttribute>
         : this(serviceProvider, collection
             .Aggregate(new Dictionary<Type, ServiceLifetime>(), (d, s) =>
             {
+#if NETCOREAPP2_2_OR_GREATER
                 d.TryAdd(s.ServiceType, s.Lifetime);
+#else
+                if(!d.ContainsKey(s.ServiceType)){
+                    d.Add(s.ServiceType, s.Lifetime);
+                }
+#endif
                 return d;
             }))
     {
