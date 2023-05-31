@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Antelcat.Extensions;
 
 namespace Antelcat.Shared.Test;
@@ -7,7 +8,6 @@ public class Tests
     [SetUp]
     public void Setup()
     {
-        
     }
 
     [Test]

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Antelcat.Foundation.Core.Extensions;
+namespace Antelcat.Extensions;
 #nullable enable
 public static partial class StringExtension
 {
