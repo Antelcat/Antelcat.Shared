@@ -1,6 +1,7 @@
-﻿using Antelcat.Attributes;
+﻿using System;
+using Antelcat.Attributes;
 using Microsoft.Extensions.DependencyInjection;
-
+#nullable enable
 namespace Antelcat.Implements.Services;
 
 public abstract class BaseServiceProviderFactory<TServiceProvider> 
