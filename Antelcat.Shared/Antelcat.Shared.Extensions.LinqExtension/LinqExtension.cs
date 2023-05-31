@@ -1,4 +1,7 @@
-﻿namespace Antelcat.Extensions;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Antelcat.Extensions;
 
 public static class LinqExtension
 {
