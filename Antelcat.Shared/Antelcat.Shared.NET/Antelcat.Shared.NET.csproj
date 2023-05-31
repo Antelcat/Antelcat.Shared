@@ -30,4 +30,6 @@
 
     <Import Project="..\Antelcat.Shared.Extensions.TaskExtension\Antelcat.Shared.Extensions.TaskExtension.projitems" Label="Shared" />
 
+    <Import Project="..\Antelcat.Shared.Extensions.EnumExtension\Antelcat.Shared.Extensions.EnumExtension.projitems" Label="Shared" />
+
 </Project>

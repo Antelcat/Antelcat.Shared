@@ -13,6 +13,7 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+      <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.3" />
     </ItemGroup>
 
     <Import Project="..\Antelcat.Shared.Extensions.StringExtension\Antelcat.Shared.Extensions.StringExtension.projitems" Label="Shared" />
@@ -23,5 +24,6 @@
     <Import Project="..\Antelcat.Shared.Extensions.LinqExtension\Antelcat.Shared.Extensions.LinqExtension.projitems" Label="Shared" />
     <Import Project="..\Antelcat.Shared.Extensions.TimeExtension\Antelcat.Shared.Extensions.TimeExtension.projitems" Label="Shared" />
     <Import Project="..\Antelcat.Shared.Extensions.TaskExtension\Antelcat.Shared.Extensions.TaskExtension.projitems" Label="Shared" />
+    <Import Project="..\Antelcat.Shared.Extensions.EnumExtension\Antelcat.Shared.Extensions.EnumExtension.projitems" Label="Shared" />
 
 </Project>
