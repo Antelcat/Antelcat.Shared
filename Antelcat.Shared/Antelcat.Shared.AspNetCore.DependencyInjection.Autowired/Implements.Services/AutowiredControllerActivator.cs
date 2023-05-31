@@ -38,23 +38,22 @@ public class AutowiredControllerActivator<TAttribute>
     where TAttribute : Attribute
 {
     private readonly IServiceCollection collection;
-    private ServiceInfos? sharedInfos;
+    private AutowiredServiceProvider<TAttribute>? serviceProvider;
     public AutowiredControllerActivator(IServiceCollection collection) => this.collection = collection;
 
     protected override AutowiredServiceProvider<TAttribute> ProvideService(
         IServiceProvider provider)
     {
-        AutowiredServiceProvider<TAttribute> ret;
-        if (sharedInfos == null)
+        if (serviceProvider == null)
         {
-            ret = new AutowiredServiceProvider<TAttribute>(provider, collection);
-            sharedInfos = ret.SharedInfos;
+            serviceProvider = new AutowiredServiceProvider<TAttribute>(provider, collection);
         }
         else
         {
-            ret = new AutowiredServiceProvider<TAttribute>(provider, sharedInfos);
+            serviceProvider.SharedInfos.ServiceProvider = provider;
         }
-        return ret;
+
+        return serviceProvider;
     }
 }
 

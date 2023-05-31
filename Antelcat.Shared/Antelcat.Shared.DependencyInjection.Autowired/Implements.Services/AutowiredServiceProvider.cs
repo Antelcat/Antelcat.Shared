@@ -18,10 +18,6 @@ public abstract class ProxiedServiceProvider
         GetService(serviceType)
         ?? throw new SerializationException($"Unable to resolve service : [ {serviceType} ]");
 
-    protected readonly IServiceProvider ServiceProvider;
-
-    protected ProxiedServiceProvider(IServiceProvider serviceProvider) => ServiceProvider = serviceProvider;
-
     protected void Autowired(object target, IEnumerable<SetterCache> mapper) =>
         mapper.ForEach(x =>
         {
@@ -81,9 +77,9 @@ public abstract class CachedAutowiredServiceProvider<TAttribute>
 
     #endregion
 
-    protected CachedAutowiredServiceProvider(IServiceProvider serviceProvider, ServiceInfos? serviceInfos = null)
-        : base(serviceProvider) =>
-        SharedInfos = serviceInfos ?? new ServiceInfos(CreateStat);
+    protected IServiceProvider ServiceProvider => SharedInfos.ServiceProvider;
+    protected CachedAutowiredServiceProvider(IServiceProvider serviceProvider, ServiceInfos? serviceInfos = null) =>
+        SharedInfos = serviceInfos ?? new ServiceInfos(serviceProvider, CreateStat);
     
     protected void Autowired(object target)
     {
@@ -151,7 +147,7 @@ public class AutowiredServiceProvider<TAttribute>
         return impl switch
         {
             IServiceScopeFactory factory => new AutowiredServiceScopeFactory(factory,
-                s => new AutowiredServiceProvider<TAttribute>(s, SharedInfos.CreateScope())),
+                s => new AutowiredServiceProvider<TAttribute>(s, SharedInfos.CreateScope(s))),
             IEnumerable<object> collections => GetServicesInternal(collections, serviceType),
             _ => GetServiceInternal(impl!, serviceType)
         };
