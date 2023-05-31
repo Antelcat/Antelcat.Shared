@@ -1,3 +1,5 @@
+using Antelcat.Extensions;
+
 namespace Antelcat.Shared.Test;
 
 public class Tests
