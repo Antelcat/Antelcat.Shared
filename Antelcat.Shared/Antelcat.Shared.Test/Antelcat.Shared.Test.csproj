@@ -11,14 +11,8 @@
 
     <ItemGroup>
       <Compile Include="..\Antelcat.Shared.IL\Extensions\ILExtension.g.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>ILExtension.g.tt</DependentUpon>
       </Compile>
       <Compile Include="..\Antelcat.Shared.Extensions.StringExtension\StringExtension.g.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>StringExtension.g.tt</DependentUpon>
       </Compile>
     </ItemGroup>
 
