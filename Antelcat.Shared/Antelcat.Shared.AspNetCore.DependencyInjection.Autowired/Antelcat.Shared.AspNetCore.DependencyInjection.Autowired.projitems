@@ -10,6 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ServiceExtension.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Implements\AutowiredControllerActivator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Implements.Services\AutowiredControllerActivator.cs" />
   </ItemGroup>
 </Project>
