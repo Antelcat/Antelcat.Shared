@@ -18,6 +18,10 @@ public abstract class ProxiedServiceProvider
         GetService(serviceType)
         ?? throw new SerializationException($"Unable to resolve service : [ {serviceType} ]");
 
+    protected readonly IServiceProvider ServiceProvider;
+
+    protected ProxiedServiceProvider(IServiceProvider serviceProvider) => ServiceProvider = serviceProvider;
+
     protected void Autowired(object target, IEnumerable<SetterCache> mapper) =>
         mapper.ForEach(x =>
         {
@@ -35,14 +39,12 @@ public abstract class CachedAutowiredServiceProvider<TAttribute>
     where TAttribute : Attribute
 {
 
-    protected  IServiceProvider ServiceProvider => SharedInfos.ServiceProvider;
-
     #region Caches
 
     /// <summary>
     /// 共享的缓存数据
     /// </summary>
-    protected ServiceInfos SharedInfos { get; set; }
+    protected ServiceInfos SharedInfos { get; }
 
     private const BindingFlags Flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 
@@ -79,9 +81,10 @@ public abstract class CachedAutowiredServiceProvider<TAttribute>
 
     #endregion
 
-    protected CachedAutowiredServiceProvider(IServiceProvider serviceProvider) =>
-        SharedInfos = new ServiceInfos(serviceProvider, CreateStat);
-
+    protected CachedAutowiredServiceProvider(IServiceProvider serviceProvider, ServiceInfos? serviceInfos = null)
+        : base(serviceProvider) =>
+        SharedInfos = serviceInfos ?? new ServiceInfos(CreateStat);
+    
     protected void Autowired(object target)
     {
         var type = target.GetType();
@@ -118,7 +121,8 @@ public class AutowiredServiceProvider<TAttribute>
     : CachedAutowiredServiceProvider<TAttribute>
     where TAttribute : Attribute
 {
-    private AutowiredServiceProvider(IServiceProvider serviceProvider) : base(serviceProvider) { }
+    private AutowiredServiceProvider(IServiceProvider serviceProvider, ServiceInfos serviceInfos)
+        : base(serviceProvider, serviceInfos) { }
 
     private AutowiredServiceProvider(IServiceProvider serviceProvider,
         Dictionary<Type, ServiceLifetime> serviceLifetimes) : base(serviceProvider) =>
@@ -147,8 +151,7 @@ public class AutowiredServiceProvider<TAttribute>
         return impl switch
         {
             IServiceScopeFactory factory => new AutowiredServiceScopeFactory(factory,
-                s => new AutowiredServiceProvider<TAttribute>(s)
-                    { SharedInfos = SharedInfos.CreateScope() }),
+                s => new AutowiredServiceProvider<TAttribute>(s, SharedInfos.CreateScope())),
             IEnumerable<object> collections => GetServicesInternal(collections, serviceType),
             _ => GetServiceInternal(impl!, serviceType)
         };

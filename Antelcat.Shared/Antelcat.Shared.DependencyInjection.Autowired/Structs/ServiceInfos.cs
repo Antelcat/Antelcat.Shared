@@ -7,14 +7,10 @@ namespace Antelcat.Structs;
 #nullable enable
 public class ServiceInfos
 {
-    public ServiceInfos(IServiceProvider serviceProvider,
-        Func<Type, ImplementInfo> statCreator)
+    public ServiceInfos(Func<Type, ImplementInfo> statCreator)
     {
-        ServiceProvider = serviceProvider;
         StatCreator = statCreator;
     }
-
-    public IServiceProvider ServiceProvider { get; }
 
     private Func<Type, ImplementInfo> StatCreator { get; }
 
@@ -67,7 +63,7 @@ public class ServiceInfos
     /// <returns></returns>
     public ServiceInfos CreateScope()
     {
-        return new ServiceInfos(ServiceProvider, StatCreator)
+        return new ServiceInfos(StatCreator)
         {
             CachedMappers = CachedMappers,
             ResolvedSingletons = ResolvedSingletons,

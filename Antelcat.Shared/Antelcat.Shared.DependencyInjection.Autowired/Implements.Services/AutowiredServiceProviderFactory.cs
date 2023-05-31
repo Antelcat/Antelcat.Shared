@@ -10,7 +10,8 @@ where TServiceProvider : IServiceProvider
 {
     protected abstract TServiceProvider ProvideService(IServiceCollection collection);
 
-    public IServiceCollection CreateBuilder(IServiceCollection? services) => services ?? new ServiceCollection();
+    public IServiceCollection CreateBuilder(IServiceCollection? services) =>
+        services ?? throw new ArgumentNullException($"{services} is null");
 
     public IServiceProvider CreateServiceProvider(IServiceCollection containerBuilder) => 
         ProvideService(containerBuilder);
