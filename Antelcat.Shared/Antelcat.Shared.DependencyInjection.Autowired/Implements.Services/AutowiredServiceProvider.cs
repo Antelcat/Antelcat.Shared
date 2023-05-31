@@ -128,7 +128,7 @@ public class AutowiredServiceProvider<TAttribute>
         : this(serviceProvider, collection
             .Aggregate(new Dictionary<Type, ServiceLifetime>(), (d, s) =>
             {
-#if NETCOREAPP2_2_OR_GREATER
+#if NETSTANDARD2_0_OR_GREATER
                 d.TryAdd(s.ServiceType, s.Lifetime);
 #else
                 if(!d.ContainsKey(s.ServiceType)){
