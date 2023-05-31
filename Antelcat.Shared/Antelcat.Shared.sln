@@ -7,7 +7,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.Extensions.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Antelcat.Shared.Test", "Antelcat.Shared.Test\Antelcat.Shared.Test.csproj", "{9F95051F-F569-4BF7-9A2B-72D450DDFAB2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Antelcat.Shared.Standard", "Antelcat.Shared.Standard\Antelcat.Shared.Standard.csproj", "{085D4754-669A-4964-94CC-18B568864CDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Antelcat.Shared.NET Standard", "Antelcat.Shared.NET Standard\Antelcat.Shared.NET Standard.csproj", "{085D4754-669A-4964-94CC-18B568864CDC}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.IL", "Antelcat.Shared.IL\Antelcat.Shared.IL.shproj", "{3AB3FD3D-C47D-4B09-87D7-299ABCE37BD2}"
 EndProject
