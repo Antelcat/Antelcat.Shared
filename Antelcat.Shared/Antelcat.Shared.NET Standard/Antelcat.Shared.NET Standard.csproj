@@ -8,13 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Include="..\Antelcat.Shared.IL\Extensions\ILExtension.g.cs">
-      </Compile>
-      <Compile Include="..\Antelcat.Shared.Extensions.StringExtension\StringExtension.g.cs">
-      </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
       <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
     </ItemGroup>
 
