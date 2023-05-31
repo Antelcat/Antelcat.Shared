@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antelcat.Shared.NET Framewo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{99F19A20-DC24-42AF-9C64-BBEA41FCB61A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antelcat.Shared.NET", "Antelcat.Shared.NET\Antelcat.Shared.NET.csproj", "{FA79373C-D0B0-403B-8B92-4CD8ADB49ADA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Antelcat.Shared.NET", "Antelcat.Shared.NET\Antelcat.Shared.NET.csproj", "{FA79373C-D0B0-403B-8B92-4CD8ADB49ADA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,12 +71,6 @@ Global
 		Antelcat.Shared.Extensions.ServiceExtension\Antelcat.Shared.Extensions.ServiceExtension.projitems*{29501f1b-f841-491a-8cad-f650ea645f4c}*SharedItemsImports = 13
 		Antelcat.Shared.IL\Antelcat.Shared.IL.projitems*{3ab3fd3d-c47d-4b09-87d7-299abce37bd2}*SharedItemsImports = 13
 		Antelcat.Shared.Runtime.CompileService\Antelcat.Shared.Runtime.CompileService.projitems*{9ee3f4ba-04a9-44b9-a75e-61d368e810e1}*SharedItemsImports = 13
-		Antelcat.Shared.DependencyInjection.Autowired\Antelcat.Shared.DependencyInjection.Autowired.projitems*{9f95051f-f569-4bf7-9a2b-72d450ddfab2}*SharedItemsImports = 5
-		Antelcat.Shared.Extensions.LinqExtension\Antelcat.Shared.Extensions.LinqExtension.projitems*{9f95051f-f569-4bf7-9a2b-72d450ddfab2}*SharedItemsImports = 5
-		Antelcat.Shared.Extensions.ServiceExtension\Antelcat.Shared.Extensions.ServiceExtension.projitems*{9f95051f-f569-4bf7-9a2b-72d450ddfab2}*SharedItemsImports = 5
-		Antelcat.Shared.Extensions.StringExtension\Antelcat.Shared.Extensions.StringExtension.projitems*{9f95051f-f569-4bf7-9a2b-72d450ddfab2}*SharedItemsImports = 5
-		Antelcat.Shared.IL\Antelcat.Shared.IL.projitems*{9f95051f-f569-4bf7-9a2b-72d450ddfab2}*SharedItemsImports = 5
-		Antelcat.Shared.Runtime.CompileService\Antelcat.Shared.Runtime.CompileService.projitems*{9f95051f-f569-4bf7-9a2b-72d450ddfab2}*SharedItemsImports = 5
 		Antelcat.Shared.Extensions.LinqExtension\Antelcat.Shared.Extensions.LinqExtension.projitems*{aad7ae77-142c-4e1a-9cee-d4825e489b6a}*SharedItemsImports = 13
 		Antelcat.Shared.DependencyInjection.Autowired\Antelcat.Shared.DependencyInjection.Autowired.projitems*{c1b1623a-0e0d-402d-9e2a-47df58f95502}*SharedItemsImports = 4
 		Antelcat.Shared.Extensions.LinqExtension\Antelcat.Shared.Extensions.LinqExtension.projitems*{c1b1623a-0e0d-402d-9e2a-47df58f95502}*SharedItemsImports = 4
@@ -85,5 +79,11 @@ Global
 		Antelcat.Shared.IL\Antelcat.Shared.IL.projitems*{c1b1623a-0e0d-402d-9e2a-47df58f95502}*SharedItemsImports = 4
 		Antelcat.Shared.Runtime.CompileService\Antelcat.Shared.Runtime.CompileService.projitems*{c1b1623a-0e0d-402d-9e2a-47df58f95502}*SharedItemsImports = 4
 		Antelcat.Shared.DependencyInjection.Autowired\Antelcat.Shared.DependencyInjection.Autowired.projitems*{c1eee7e2-07f3-4970-9489-783254de0f8d}*SharedItemsImports = 13
+		Antelcat.Shared.DependencyInjection.Autowired\Antelcat.Shared.DependencyInjection.Autowired.projitems*{fa79373c-d0b0-403b-8b92-4cd8adb49ada}*SharedItemsImports = 5
+		Antelcat.Shared.Extensions.LinqExtension\Antelcat.Shared.Extensions.LinqExtension.projitems*{fa79373c-d0b0-403b-8b92-4cd8adb49ada}*SharedItemsImports = 5
+		Antelcat.Shared.Extensions.ServiceExtension\Antelcat.Shared.Extensions.ServiceExtension.projitems*{fa79373c-d0b0-403b-8b92-4cd8adb49ada}*SharedItemsImports = 5
+		Antelcat.Shared.Extensions.StringExtension\Antelcat.Shared.Extensions.StringExtension.projitems*{fa79373c-d0b0-403b-8b92-4cd8adb49ada}*SharedItemsImports = 5
+		Antelcat.Shared.IL\Antelcat.Shared.IL.projitems*{fa79373c-d0b0-403b-8b92-4cd8adb49ada}*SharedItemsImports = 5
+		Antelcat.Shared.Runtime.CompileService\Antelcat.Shared.Runtime.CompileService.projitems*{fa79373c-d0b0-403b-8b92-4cd8adb49ada}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
