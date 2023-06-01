@@ -1,0 +1,79 @@
+﻿<#@ template language="C#" debug="true" hostspecific="true" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Xml.Linq" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+<#
+	const string Namespace = "Antelcat.Implements.Converters";
+	var list = new List<string>()
+	{
+		"sbyte",
+		"byte",
+		"bool",
+		"int",
+		"uint",
+		"long",
+		"ulong",
+		"double",
+		"float",
+		"DateTime"
+	};
+	var classes = new Dictionary<string,string>();
+#>
+#if !NET && !NETSTANDARD
+using System;
+using System.Collections.Generic;
+#nullable enable
+#endif
+using Antelcat.Extensions;
+using System.ComponentModel;
+using System.Globalization;
+namespace <#=Namespace#>;
+<# 
+foreach(var type in list) { 
+	var name = $"{type[0].ToString().ToUpper()}{type.Substring(1)}";
+	var className = $"StringTo{name}Converter";
+	classes.Add(type,className);
+#>
+///<summary>
+/// Convert between <see cref="string"/> and <see cref="<#=type#>"/>
+///</summary>
+public class <#=className#> : TypeConverter
+{
+	public override object ConvertTo(
+		ITypeDescriptorContext? _, 
+		CultureInfo? __, 
+		object? value, 
+		Type ___) => (value as string).To<#=name#>();
+
+   	public override object? ConvertFrom(
+		ITypeDescriptorContext? _, 
+		CultureInfo? __, 
+		object value) => value?.ToString();
+
+   	public override bool CanConvertTo(
+		ITypeDescriptorContext? _, 
+		Type? destinationType) => destinationType == typeof(<#=type#>);
+
+   	public override bool CanConvertFrom(
+		ITypeDescriptorContext? _, 
+		Type sourceType) => sourceType == typeof(<#=type#>);
+}
+
+<# 
+}
+#>
+
+public static class StringValueConverters
+{
+	private static readonly Dictionary<Type,TypeConverter> Instances = new ()
+	{
+<#foreach(var pair in classes) {#>
+		{ typeof(<#=pair.Key#>) , new <#=pair.Value#>() },
+<#}#>
+	};
+
+	public static bool FindByType(Type type, out TypeConverter? converter) 
+		=> Instances.TryGetValue(type, out converter); 
+}

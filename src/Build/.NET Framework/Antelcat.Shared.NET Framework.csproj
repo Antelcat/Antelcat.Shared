@@ -59,5 +59,7 @@
   <Import Project="..\..\Shared\IL\Antelcat.Shared.IL.projitems" Label="Shared" />
   <Import Project="..\..\Shared\Extensions\TimeExtension\Antelcat.Shared.Extensions.TimeExtension.projitems" Label="Shared" />
   <Import Project="..\..\Shared\Runtime.CompileService\Antelcat.Shared.Runtime.CompileService.projitems" Label="Shared" />
+  <Import Project="..\..\Shared\TypeConvert\Antelcat.Shared.TypeConvert.projitems" Label="Shared" />
+  <Import Project="..\..\Shared\Extensions\DebugExtension\Antelcat.Shared.Extensions.DebugExtension.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

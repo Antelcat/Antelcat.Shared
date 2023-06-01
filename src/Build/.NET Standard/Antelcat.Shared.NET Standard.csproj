@@ -16,29 +16,14 @@
     </ItemGroup>
 
     <Import Project="..\..\Shared\Extensions\LinqExtension\Antelcat.Shared.Extensions.LinqExtension.projitems" Label="Shared" />
-
     <Import Project="..\..\Shared\Extensions\ServiceExtension\Antelcat.Shared.Extensions.ServiceExtension.projitems" Label="Shared" />
-
     <Import Project="..\..\Shared\Extensions\StringExtension\Antelcat.Shared.Extensions.StringExtension.projitems" Label="Shared" />
-
     <Import Project="..\..\Shared\Extensions\TaskExtension\Antelcat.Shared.Extensions.TaskExtension.projitems" Label="Shared" />
-
     <Import Project="..\..\Shared\Extensions\TimeExtension\Antelcat.Shared.Extensions.TimeExtension.projitems" Label="Shared" />
-
     <Import Project="..\..\Shared\DependencyInjection.Autowired\Antelcat.Shared.DependencyInjection.Autowired.projitems" Label="Shared" />
-
     <Import Project="..\..\Shared\IL\Antelcat.Shared.IL.projitems" Label="Shared" />
-
     <Import Project="..\..\Shared\Runtime.CompileService\Antelcat.Shared.Runtime.CompileService.projitems" Label="Shared" />
-
-    <ItemGroup>
-      <Content Update="D:\Shared\WorkSpace\Git\Antelcat.Shared\src\Shared\Extensions\StringExtension\StringExtension.g.tt">
-        <LastGenOutput>StringExtension.g.cs</LastGenOutput>
-      </Content>
-      <Content Update="D:\Shared\WorkSpace\Git\Antelcat.Shared\src\Shared\IL\Extensions\ILExtension.g.tt">
-        <LastGenOutput>ILExtension.g.cs</LastGenOutput>
-      </Content>
-    </ItemGroup>
-
+    <Import Project="..\..\Shared\TypeConvert\Antelcat.Shared.TypeConvert.projitems" Label="Shared" />
+    <Import Project="..\..\Shared\Extensions\DebugExtension\Antelcat.Shared.Extensions.DebugExtension.projitems" Label="Shared" />
 
 </Project>
