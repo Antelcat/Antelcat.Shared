@@ -6,18 +6,21 @@ using System.Collections.Generic;
 using Antelcat.Extensions;
 using System.ComponentModel;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 namespace Antelcat.Implements.Converters;
 ///<summary>
 /// Convert between <see cref="string"/> and <see cref="sbyte"/>
 ///</summary>
 public class StringToSbyteConverter : TypeConverter
 {
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public override object ConvertTo(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
 		object? value, 
 		Type ___) => (value as string).ToSbyte();
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
@@ -37,12 +40,14 @@ public class StringToSbyteConverter : TypeConverter
 ///</summary>
 public class StringToByteConverter : TypeConverter
 {
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public override object ConvertTo(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
 		object? value, 
 		Type ___) => (value as string).ToByte();
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
@@ -62,12 +67,14 @@ public class StringToByteConverter : TypeConverter
 ///</summary>
 public class StringToBoolConverter : TypeConverter
 {
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public override object ConvertTo(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
 		object? value, 
 		Type ___) => (value as string).ToBool();
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
@@ -87,12 +94,14 @@ public class StringToBoolConverter : TypeConverter
 ///</summary>
 public class StringToIntConverter : TypeConverter
 {
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public override object ConvertTo(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
 		object? value, 
 		Type ___) => (value as string).ToInt();
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
@@ -112,12 +121,14 @@ public class StringToIntConverter : TypeConverter
 ///</summary>
 public class StringToUintConverter : TypeConverter
 {
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public override object ConvertTo(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
 		object? value, 
 		Type ___) => (value as string).ToUint();
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
@@ -137,12 +148,14 @@ public class StringToUintConverter : TypeConverter
 ///</summary>
 public class StringToLongConverter : TypeConverter
 {
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public override object ConvertTo(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
 		object? value, 
 		Type ___) => (value as string).ToLong();
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
@@ -162,12 +175,14 @@ public class StringToLongConverter : TypeConverter
 ///</summary>
 public class StringToUlongConverter : TypeConverter
 {
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public override object ConvertTo(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
 		object? value, 
 		Type ___) => (value as string).ToUlong();
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
@@ -187,12 +202,14 @@ public class StringToUlongConverter : TypeConverter
 ///</summary>
 public class StringToDoubleConverter : TypeConverter
 {
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public override object ConvertTo(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
 		object? value, 
 		Type ___) => (value as string).ToDouble();
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
@@ -212,12 +229,14 @@ public class StringToDoubleConverter : TypeConverter
 ///</summary>
 public class StringToFloatConverter : TypeConverter
 {
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public override object ConvertTo(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
 		object? value, 
 		Type ___) => (value as string).ToFloat();
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
@@ -237,12 +256,14 @@ public class StringToFloatConverter : TypeConverter
 ///</summary>
 public class StringToDateTimeConverter : TypeConverter
 {
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public override object ConvertTo(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
 		object? value, 
 		Type ___) => (value as string).ToDateTime();
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 

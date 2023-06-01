@@ -44,11 +44,27 @@
   <ItemGroup>
     <Compile Include="Using.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Update="..\..\Shared\TypeConvert\Implements.Converters\StringValueConverter.cs">
+      <DependentUpon>StringValueConverter.tt</DependentUpon>
+    </Compile>
+    <Compile Update="..\..\Shared\Extensions\StringExtension\StringExtension.g.cs">
+      <DependentUpon>StringExtension.g.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
       <Version>7.0.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="..\..\Shared\TypeConvert\Implements.Converters\StringValueConverter.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>StringValueConverter.cs</LastGenOutput>
+    </Content>
+    <Content Update="..\..\Shared\Extensions\StringExtension\StringExtension.g.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>StringExtension.g.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="..\..\Shared\Extensions\EnumExtension\Antelcat.Shared.Extensions.EnumExtension.projitems" Label="Shared" />
   <Import Project="..\..\Shared\DependencyInjection.Autowired\Antelcat.Shared.DependencyInjection.Autowired.projitems" Label="Shared" />

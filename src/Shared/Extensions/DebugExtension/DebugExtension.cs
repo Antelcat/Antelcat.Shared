@@ -2,6 +2,7 @@
 using System;
 #endif
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace Antelcat.Shared.Extensions.DebugExtension
 {
@@ -15,7 +16,8 @@ namespace Antelcat.Shared.Extensions.DebugExtension
 #else
                     "NET Framework";
 #endif
-                    
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T Debug<T>(this T instance)
         {
 #if DEBUG

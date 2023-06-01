@@ -29,6 +29,7 @@ using System.Collections.Generic;
 using Antelcat.Extensions;
 using System.ComponentModel;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 namespace <#=Namespace#>;
 <# 
 foreach(var type in list) { 
@@ -41,12 +42,14 @@ foreach(var type in list) {
 ///</summary>
 public class <#=className#> : TypeConverter
 {
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public override object ConvertTo(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
 		object? value, 
 		Type ___) => (value as string).To<#=name#>();
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 

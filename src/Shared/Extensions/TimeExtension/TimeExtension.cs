@@ -1,4 +1,6 @@
-﻿namespace Antelcat.Extensions;
+﻿using System.Runtime.CompilerServices;
+
+namespace Antelcat.Extensions;
 #if !NETSTANDARD && !NET
 using System;
 #endif
@@ -20,7 +22,8 @@ public static class TimeExtension
     /// 当前时间戳
     /// </summary>
     /// <returns></returns>
-    public static long CurrentTimestamp => DateTimeOffset.Now.ToUnixTimeMilliseconds();
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static long CurrentTimestamp() => DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
     /// <summary>
     /// 转化为时间戳
