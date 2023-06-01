@@ -48,7 +48,7 @@ public class ServiceInfos
         if (ResolvedSingletons.Contains(serviceType)
             || ResolvedScopes.Contains(serviceType)
             || target is null) return true;
-        if (target is IServiceScopeFactory) return false;
+        if (target is IServiceScopeFactory or IEnumerable<object>) return false;
         return !GetStat(target.GetType()).NeedAutowired;
     }
 
