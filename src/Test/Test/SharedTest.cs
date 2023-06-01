@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System;
-using Antelcat.Foundation.Core.Extensions;
+using Antelcat.Extensions;
 using Antelcat.Implements.Converters;
 using Antelcat.Shared.Extensions.DebugExtension;
 using NUnit.Framework;

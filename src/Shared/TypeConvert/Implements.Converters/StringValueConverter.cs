@@ -21,7 +21,7 @@ public class StringToSbyteConverter : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value?.ToString();
+		object value) => value.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -46,7 +46,7 @@ public class StringToByteConverter : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value?.ToString();
+		object value) => value.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -71,7 +71,7 @@ public class StringToBoolConverter : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value?.ToString();
+		object value) => value.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -96,7 +96,7 @@ public class StringToIntConverter : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value?.ToString();
+		object value) => value.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -121,7 +121,7 @@ public class StringToUintConverter : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value?.ToString();
+		object value) => value.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -146,7 +146,7 @@ public class StringToLongConverter : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value?.ToString();
+		object value) => value.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -171,7 +171,7 @@ public class StringToUlongConverter : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value?.ToString();
+		object value) => value.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -196,7 +196,7 @@ public class StringToDoubleConverter : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value?.ToString();
+		object value) => value.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -221,7 +221,7 @@ public class StringToFloatConverter : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value?.ToString();
+		object value) => value.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -246,7 +246,7 @@ public class StringToDateTimeConverter : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value?.ToString();
+		object value) => value.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -274,6 +274,6 @@ public static class StringValueConverters
 		{ typeof(DateTime) , new StringToDateTimeConverter() },
 	};
 
-	public static bool FindByType(Type type, out TypeConverter converter) 
-		=> Instances.TryGetValue(type,out converter); 
+	public static bool FindByType(Type type, out TypeConverter? converter) 
+		=> Instances.TryGetValue(type, out converter); 
 }

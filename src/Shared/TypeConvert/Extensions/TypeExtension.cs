@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Antelcat.Implements.Converters;
 
-namespace Antelcat.Foundation.Core.Extensions;
+namespace Antelcat.Extensions;
 
 public static partial class TypeExtension
 {

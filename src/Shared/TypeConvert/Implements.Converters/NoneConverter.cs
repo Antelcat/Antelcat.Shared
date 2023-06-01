@@ -16,7 +16,7 @@ public class NoneConverter : TypeConverter
     public override bool CanConvertTo(ITypeDescriptorContext? context, Type? destinationType) => true;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override object? ConvertFrom(
+    public override object ConvertFrom(
         ITypeDescriptorContext? context,
         CultureInfo? culture,
         object value) => value;
