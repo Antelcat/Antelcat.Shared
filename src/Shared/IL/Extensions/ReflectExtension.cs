@@ -21,6 +21,9 @@ public static partial class ReflectExtension
 {
     public static Ctor<object> CreateCtor(this Type type, params Type[] ctorParamTypes) =>
         CreateCtor<object>(type, ctorParamTypes);
+
+    public static Ctor<object> CreateCtor(this ConstructorInfo ctor) =>
+        CreateCtor<object>(ctor);
     
     public static Setter<object,object> CreateSetter(this FieldInfo field) => 
         CreateSetter<object, object>(field);
@@ -39,12 +42,24 @@ public static partial class ReflectExtension
 
     public static Ctor<T> CreateCtor<T>(this Type type, params Type[] paramTypes)
     {
+        var ctor = type.GetConstructor(paramTypes);
+        if (ctor == null)
+            throw new Exception("Generating constructor for type: " + type +
+                                (paramTypes.Length == 0
+                                    ? "No empty constructor found!"
+                                    : "No constructor found that matches the following parameter types: " +
+                                      string.Join(",", paramTypes.Select(x => x.Name).ToArray())));
+        return CreateCtor<T>(ctor);
+    }
+
+    public static Ctor<T> CreateCtor<T>(this ConstructorInfo ctor)
+    {
         var dynMethod = new DynamicMethod(string.Empty, typeof(T), new[] { typeof(object[]) });
         var il = dynMethod.GetILGenerator();
-        CtorIL<T>(il, type, paramTypes);
+        CtorIL<T>(il, ctor.DeclaringType!, ctor);
         return (Ctor<T>)dynMethod.CreateDelegate(typeof(Ctor<T>));
     }
-    
+
     public static Getter<TTarget, TReturn> CreateGetter<TTarget, TReturn>(this PropertyInfo prop) =>
         !prop.CanRead
             ? throw new InvalidOperationException("Property is not readable " + prop.Name)
@@ -179,11 +194,11 @@ public static partial class ReflectExtension
 
 public static partial class ReflectExtension
 {
-    private static void CtorIL<T>(ILGenerator il, Type type, Type[] paramTypes)
+    private static void CtorIL<T>(ILGenerator il, Type type, ConstructorInfo ctor)
     {
         var targetType = typeof(T) == typeof(object) ? type : typeof(T);
-
-        if (targetType.IsValueType && paramTypes.Length == 0)
+        var parameters = ctor.GetParameters();
+        if (targetType.IsValueType && parameters.Length == 0)
         {
             var tmp = il.DeclareLocal(targetType);
             il.EmitEx(OpCodes.Ldloca, tmp)
@@ -192,15 +207,6 @@ public static partial class ReflectExtension
         }
         else
         {
-            var ctor = targetType.GetConstructor(paramTypes);
-            if (ctor == null)
-                throw new Exception("Generating constructor for type: " + targetType +
-                                    (paramTypes.Length == 0
-                                        ? "No empty constructor found!"
-                                        : "No constructor found that matches the following parameter types: " +
-                                          string.Join(",", paramTypes.Select(x => x.Name).ToArray())));
-
-            var parameters = ctor.GetParameters();
             for (var i = 0; i < parameters.Length; i++)
             {
                 il.EmitEx(OpCodes.Ldarg_0)
@@ -208,7 +214,7 @@ public static partial class ReflectExtension
                     .EmitEx(OpCodes.Ldelem_Ref);
                 if (!parameters[i].IsOut)
                 {
-                    il.EmitEx(OpCodes.Unbox_Any, paramTypes[i]);
+                    il.EmitEx(OpCodes.Unbox_Any, parameters[i].ParameterType);
                 }
             }
 

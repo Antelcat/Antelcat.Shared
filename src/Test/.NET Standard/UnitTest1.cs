@@ -1,5 +1,14 @@
+using Antelcat.Extensions;
+
 namespace Antelcat.Shared.Test.NET_Standard
 {
+    public class TestClass
+    {
+        public TestClass(int i)
+        {
+            
+        }
+    }
     public class Tests
     {
         [SetUp]
@@ -10,7 +19,10 @@ namespace Antelcat.Shared.Test.NET_Standard
         [Test]
         public void Test1()
         {
-            Assert.Pass();
+            var ctor = typeof(TestClass).GetConstructor(new[] { typeof(int) });
+            var del = ctor!.CreateCtor();
+            var instance = del.Invoke(1);
+            Assert.Pass();          
         }
     }
 }
