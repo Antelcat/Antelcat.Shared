@@ -1,20 +1,10 @@
 using System.ComponentModel;
-using Antelcat.Extensions;
+using Antelcat.Foundation.Core.Extensions;
+using Antelcat.Implements.Converters;
 
-namespace Antelcat.Shared.Test;
+namespace Antelcat.Shared.Test.NET;
 
 public class Tests
 {
-    [SetUp]
-    public void Setup()
-    {
-    }
-
-    [Test]
-    public void Test1()
-    {
-        var s = "a".ToUpperCamelCase();
-
-        Assert.Pass();
-    }
+    
 }

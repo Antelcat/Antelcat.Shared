@@ -22,4 +22,12 @@
     <ProjectReference Include="..\..\Build\.NET Standard\Antelcat.Shared.NET Standard.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\Test\SharedTest.cs">
+      <Link>SharedTest.cs</Link>
+    </Compile>
+  </ItemGroup>
+
+  <Import Project="..\Test\Antelcat.Shared.Test.projitems" Label="Shared" />
+
 </Project>
