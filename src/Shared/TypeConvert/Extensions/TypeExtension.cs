@@ -4,13 +4,18 @@ using System.Collections.Generic;
 #nullable enable
 #endif
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Antelcat.Implements.Converters;
 namespace Antelcat.Extensions;
 
 public static partial class TypeExtension
 {
-    public static bool TryGetConverter(this Type thisType, Type toType, out TypeConverter? converter)
+    public static bool TryGetConverter(this Type thisType, Type toType,
+#if NET || NETSTANDARD
+        [NotNullWhen(true)]
+ #endif
+        out TypeConverter? converter)
     {
         converter = null;
         if (thisType == toType)
@@ -25,12 +30,13 @@ public static partial class TypeExtension
             converter = new StringConverter();
             return true;
         }
+
         return false;
     }
 
     public static TypeConverter GetConverter(this Type thisType, Type toType) =>
         TryGetConverter(thisType, toType, out var ret)
-            ? ret!
+            ? ret
             : throw new NotSupportedException("Not support this type yet");
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
