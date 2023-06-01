@@ -1,5 +1,6 @@
-﻿using System;
-
+﻿#if !NET && !NETSTANDARD
+using System;
+#endif
 namespace Antelcat.Extensions;
 #nullable enable
 public static partial class StringExtension

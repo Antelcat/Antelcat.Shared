@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Antelcat.Shared.NET_Standard
 {
-    internal class Usings
+    internal class Using
     {
-        public static void Using()
+        public static void Use()
         {
         }
     }
