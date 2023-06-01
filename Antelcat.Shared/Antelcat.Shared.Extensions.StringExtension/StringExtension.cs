@@ -5,16 +5,16 @@ namespace Antelcat.Extensions;
 public static partial class StringExtension
 {
     public static string ToUpperCamelCase(this string value) =>
-#if NETCOREAPP2_2_OR_GREATER
-        $"{(char)(value[0] - 32)}{value[1..]}";
-#else
+#if !NETSTANDARD2_1_OR_GREATER
         $"{(char)(value[0] - 32)}{value.Substring(1)}";
+#else
+        $"{(char)(value[0] - 32)}{value[1..]}";
 #endif
     public static string ToLowerCamelCase(this string value) =>
-#if NETCOREAPP2_2_OR_GREATER
-        $"{(char)(value[0] + 32)}{value[1..]}";
-#else
+#if !NETSTANDARD2_1_OR_GREATER
         $"{(char)(value[0] + 32)}{value.Substring(1)}";
+#else
+        $"{(char)(value[0] + 32)}{value[1..]}";
 #endif
 
     public static string AnotherCamelCase(this string value) =>

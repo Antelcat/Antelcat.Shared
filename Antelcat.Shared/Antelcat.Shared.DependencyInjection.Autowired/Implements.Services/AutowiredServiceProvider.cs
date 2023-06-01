@@ -1,4 +1,9 @@
-﻿using System.Reflection;
+﻿#if !NET && !NETSTANDARD
+using System;
+using System.Collections.Generic;
+using System.Linq;
+#endif
+using System.Reflection;
 using System.Runtime.Serialization;
 using Antelcat.Extensions;
 using Antelcat.Structs;
