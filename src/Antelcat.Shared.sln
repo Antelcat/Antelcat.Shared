@@ -15,8 +15,6 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.Extensions.
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.Extensions.LinqExtension", "Shared\Extensions\LinqExtension\Antelcat.Shared.Extensions.LinqExtension.shproj", "{AAD7AE77-142C-4E1A-9CEE-D4825E489B6A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Antelcat.Shared.Test.NET", "Test\.NET\Antelcat.Shared.Test.NET.csproj", "{9F95051F-F569-4BF7-9A2B-72D450DDFAB2}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.IL", "Shared\IL\Antelcat.Shared.IL.shproj", "{3AB3FD3D-C47D-4B09-87D7-299ABCE37BD2}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.DependencyInjection.Autowired", "Shared\DependencyInjection.Autowired\Antelcat.Shared.DependencyInjection.Autowired.shproj", "{C1EEE7E2-07F3-4970-9489-783254DE0F8D}"
@@ -31,6 +29,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Antelcat.Shared.NET Standar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antelcat.Shared.NET Framework", "Build\.NET Framework\Antelcat.Shared.NET Framework.csproj", "{CA1D9BD2-136C-4142-8EC4-5818DDE00A3D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Antelcat.Shared.Test.NET", "Test\.NET\Antelcat.Shared.Test.NET.csproj", "{9F95051F-F569-4BF7-9A2B-72D450DDFAB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antelcat.Shared.Test.NET Standard", "Test\.NET Standard\Antelcat.Shared.Test.NET Standard.csproj", "{9A903688-14F8-462A-9365-E60C5C576D57}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Antelcat.Shared.Test.NET Framework", "Test\.NET Framework\Antelcat.Shared.Test.NET Framework.csproj", "{D6089D31-9821-4A67-BFC4-026DE769A838}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{99F19A20-DC24-42AF-9C64-BBEA41FCB61A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{FCC570C0-6909-44AA-BA2B-D176C94B04E5}"
@@ -41,8 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AspNetCore", "AspNetCore", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{F08725ED-2CB0-49B2-B03A-A4A31EEA1854}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Antelcat.Shared.Test.NET Framework", "Test\.NET Framework\Antelcat.Shared.Test.NET Framework.csproj", "{D6089D31-9821-4A67-BFC4-026DE769A838}"
-EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +72,10 @@ Global
 		{D6089D31-9821-4A67-BFC4-026DE769A838}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6089D31-9821-4A67-BFC4-026DE769A838}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6089D31-9821-4A67-BFC4-026DE769A838}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A903688-14F8-462A-9365-E60C5C576D57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A903688-14F8-462A-9365-E60C5C576D57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A903688-14F8-462A-9365-E60C5C576D57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A903688-14F8-462A-9365-E60C5C576D57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +98,7 @@ Global
 		{5986C05D-5FDF-4D35-8801-8983F6659BD1} = {FCC570C0-6909-44AA-BA2B-D176C94B04E5}
 		{F08725ED-2CB0-49B2-B03A-A4A31EEA1854} = {FCC570C0-6909-44AA-BA2B-D176C94B04E5}
 		{D6089D31-9821-4A67-BFC4-026DE769A838} = {26C7871C-F002-4C72-856F-6C25CFFACB37}
+		{9A903688-14F8-462A-9365-E60C5C576D57} = {26C7871C-F002-4C72-856F-6C25CFFACB37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D6FBF73E-4457-4797-B187-E3AB0EF6F24B}
