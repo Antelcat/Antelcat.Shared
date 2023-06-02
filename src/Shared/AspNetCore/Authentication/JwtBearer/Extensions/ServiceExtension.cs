@@ -8,6 +8,14 @@ namespace Antelcat.Extensions;
 
 public static partial class ServiceExtension
 {
+    /// <summary>
+    /// 配置Jwt行为i
+    /// </summary>
+    /// <param name="services">服务容器</param>
+    /// <param name="configure">Jwt基础配置</param>
+    /// <param name="validation">Jwt验证通过二级校验</param>
+    /// <param name="failed">校验失败的返回报文处理</param>
+    /// <typeparam name="TIdentity">验证关联的身份模型</typeparam>
     public static void ConfigureJwt<TIdentity>(
         this IServiceCollection services,
         Action<JwtConfigure<TIdentity>>? configure = null,
