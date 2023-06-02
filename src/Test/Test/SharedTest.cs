@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -10,12 +11,21 @@ using NUnit.Framework;
 
 namespace Antelcat.Shared.Test;
 
+public class RefClass{}
 public class TestClass
 {
-    public string Getter => value;
-    public string Setter { set => this.value = value; }
+    public RefClass RefProp { get; set; } = new();
+    public RefClass RefField = new();
 
-    public string value = "string";
+    public int ValueProp { get; set; } = 0;
+    public int ValueField = 0;
+    
+    public static RefClass StaticRefProp { get; set; } = new();
+    public static RefClass StaticRefField = new();
+
+    public static int StaticValueProp { get; set; } = 0;
+    public static int StaticValueField = 0;
+
 }
 
 class SharedTest
@@ -30,16 +40,43 @@ class SharedTest
     [Test]
     public void Test()
     {
-        var instance = new TestClass();
         var type = typeof(TestClass);
-        type.GetProperty("Setter")!.CreateSetter<TestClass, string>().Invoke(ref instance, "new string 1");
-        var str1 = type.GetProperty("Getter")!.CreateGetter<TestClass, string>().Invoke((TestClass)instance);
-        type.GetField("value")!.CreateSetter<TestClass, object>().Invoke(ref instance, "new string 2");
-        var str2 = type.GetProperty("Getter")!.CreateGetter<TestClass, string>().Invoke((TestClass)instance);
+        var Prefix = "Ref";
+        var prop = type.GetProperty($"{Prefix}Prop")!;
+        var field = type.GetField($"{Prefix}Field")!;
+
+        var i = 1;
+        var valueGetter = () => i++;
+        TestIL((TestClass)new TestClass(), prop, field, () => new RefClass());
+        
         Debugger.Break();
     }
+
+    public void TestIL<TTarget, TValue>(TTarget instance, PropertyInfo prop, FieldInfo field, Func<TValue> valueGetter)
+    {
+        var objInst = (object)instance;
+        prop.CreateSetter<TTarget, object>().Invoke(ref instance,  valueGetter());
+        var val2 = prop.CreateGetter<TTarget, object>().Invoke(instance);
+        prop.CreateSetter<TTarget, TValue>().Invoke(ref instance, valueGetter());
+        var val1 = prop.CreateGetter<TTarget, TValue>().Invoke(instance);
+        prop.CreateSetter<object, TValue>().Invoke(ref objInst,  valueGetter());
+        var val3 = prop.CreateGetter<object, TValue>().Invoke(instance);
+        prop.CreateSetter<object, object>().Invoke(ref objInst,  valueGetter());
+        var val4 = prop.CreateGetter<object, object>().Invoke(instance);
         
         
+        field.CreateSetter<TTarget, TValue>().Invoke(ref instance,  valueGetter());
+        var val5 = field.CreateGetter<TTarget, TValue>().Invoke(instance);
+        field.CreateSetter<TTarget, object>().Invoke(ref instance,  valueGetter());
+        var val6 = field.CreateGetter<TTarget, object>().Invoke(instance);
+        field.CreateSetter<object, TValue>().Invoke(ref objInst,  valueGetter());
+        var val7 = field.CreateGetter<object, TValue>().Invoke(instance);
+        field.CreateSetter<object, object>().Invoke(ref objInst,  valueGetter());
+        var val8 = field.CreateGetter<object, object>().Invoke(instance);
+        Debugger.Break();
+    }
+
+
     private const int Times = 1000;
 
     [Test]

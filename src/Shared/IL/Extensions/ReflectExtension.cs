@@ -65,7 +65,7 @@ public static partial class ReflectExtension
             ? throw new InvalidOperationException("Property is not readable " + prop.Name)
             : GenerateDelegate<Getter<TTarget, TReturn>, PropertyInfo>(
                 prop,
-                MapPropGetter<TTarget>,
+                MapPropGetter<TTarget,TReturn>,
                 typeof(TReturn),
                 typeof(TTarget));
 
@@ -74,7 +74,7 @@ public static partial class ReflectExtension
             ? throw new InvalidOperationException("Property is not writable " + prop.Name)
             : GenerateDelegate<Setter<TTarget, TValue>, PropertyInfo>(
                 prop,
-                MapPropSetter<TTarget>,
+                MapPropSetter<TTarget,TValue>,
                 typeof(void),
                 typeof(TTarget).MakeByRefType(),
                 typeof(TValue));
@@ -82,14 +82,14 @@ public static partial class ReflectExtension
     public static Getter<TTarget, TReturn> CreateGetter<TTarget, TReturn>(this FieldInfo field) =>
         GenerateDelegate<Getter<TTarget, TReturn>, FieldInfo>(
             field,
-            MapFieldGetter<TTarget>,
+            MapFieldGetter<TTarget,TReturn>,
             typeof(TReturn),
             typeof(TTarget));
 
     public static Setter<TTarget, TValue> CreateSetter<TTarget, TValue>(this FieldInfo field) =>
         GenerateDelegate<Setter<TTarget, TValue>, FieldInfo>(
             field,
-            MapFieldSetter<TTarget>,
+            MapFieldSetter<TTarget,TValue>,
             typeof(void),
             typeof(TTarget).MakeByRefType(),
             typeof(TValue));
@@ -129,18 +129,24 @@ public static partial class ReflectExtension
 
 public static partial class ReflectExtension
 {
-    private static void MapPropGetter<TTarget>(ILGenerator il, PropertyInfo prop)
+    private static void MapPropGetter<TTarget,TReturn>(ILGenerator il, PropertyInfo prop)
     {
         var method = prop.GetGetMethod(true)!;
         MemberGetterIL<TTarget>(
             il,
             prop,
-            prop.PropertyType,
             method.IsStatic,
-            (e, p) => e.CallOrVirtualEx(method));
+            e =>
+            {
+                e.CallOrVirtualEx(method);
+                if (typeof(TReturn) != prop.PropertyType)
+                {
+                    e.BoxIfValueType(prop.PropertyType);
+                }
+            });
     }
 
-    private static void MapPropSetter<TTarget>(ILGenerator il, PropertyInfo prop)
+    private static void MapPropSetter<TTarget,TValue>(ILGenerator il, PropertyInfo prop)
     {
         var method = prop.GetSetMethod(true)!;
         MemberSetterIL<TTarget>(
@@ -148,44 +154,60 @@ public static partial class ReflectExtension
             prop,
             prop.PropertyType,
             method.IsStatic,
-            (e, p) => e.CallOrVirtualEx(method)
-        );
+            e =>
+            {
+                if (!prop.PropertyType.IsValueType || typeof(TValue) == typeof(object))
+                {
+                    e.EmitEx(OpCodes.Unbox_Any, prop.PropertyType);
+                }
+                e.CallOrVirtualEx(method);
+            });
     }
 
-    private static void MapFieldGetter<TTarget>(ILGenerator il, FieldInfo field) =>
+    private static void MapFieldGetter<TTarget,TReturn>(ILGenerator il, FieldInfo field) =>
         MemberGetterIL<TTarget>(il,
             field,
-            field.FieldType,
             field.IsStatic,
-            (e, f) =>
+            e =>
             {
                 if (field.IsLiteral)
                 {
                     if (field.FieldType == typeof(bool))
                         e.EmitEx(OpCodes.Ldc_I4_1);
                     else if (field.FieldType == typeof(int))
-                        e.EmitEx(OpCodes.Ldc_I4, (int)field.GetRawConstantValue()!);
+                        e.EmitEx(OpCodes.Ldc_I4, (int)field.GetRawConstantValue());
                     else if (field.FieldType == typeof(float))
-                        e.EmitEx(OpCodes.Ldc_R4, (float)field.GetRawConstantValue()!);
+                        e.EmitEx(OpCodes.Ldc_R4, (float)field.GetRawConstantValue());
                     else if (field.FieldType == typeof(double))
-                        e.EmitEx(OpCodes.Ldc_R8, (double)field.GetRawConstantValue()!);
+                        e.EmitEx(OpCodes.Ldc_R8, (double)field.GetRawConstantValue());
                     else if (field.FieldType == typeof(string))
-                        e.EmitEx(OpCodes.Ldstr, (string)field.GetRawConstantValue()!);
+                        e.EmitEx(OpCodes.Ldstr, (string)field.GetRawConstantValue());
                     else
                         throw new NotSupportedException(
-                            $"Cannot create a FieldGetter for type: {field.FieldType.Name} ");
+                            $"Cannot create a FieldGetter for type: {field.FieldType.Name}");
                 }
                 else
                     e.LodFldEx(field);
+                if (typeof(TReturn) != field.FieldType)
+                {
+                    e.BoxIfValueType(field.FieldType);
+                }
             });
 
-    private static void MapFieldSetter<TTarget>(ILGenerator il, FieldInfo field) =>
+    private static void MapFieldSetter<TTarget,TValue>(ILGenerator il, FieldInfo field) =>
         MemberSetterIL<TTarget>(
             il,
             field,
             field.FieldType,
             field.IsStatic,
-            (e, f) => e.SetFldEx(field));
+            e =>
+            {
+                if (!field.FieldType.IsValueType || typeof(TValue) == typeof(object))
+                {
+                    e.EmitEx(OpCodes.Unbox_Any, field.FieldType);
+                }
+                e.SetFldEx(field);
+            });
 }
 
 #endregion
@@ -229,23 +251,22 @@ public static partial class ReflectExtension
     private static void MemberGetterIL<TTarget>(
         ILGenerator il,
         MemberInfo member,
-        Type memberType,
         bool isStatic,
-        Action<ILGenerator, MemberInfo> emitAction)
+        Action<ILGenerator> emitAction)
     {
-        if (typeof(TTarget) == typeof(object)) // weakly-typed?
+        var objType = typeof(object);
+        if (typeof(TTarget) == objType)
         {
             if (!isStatic)
                 il.EmitEx(OpCodes.Ldarg_0)
                     .UnboxOrCastEx(member.DeclaringType!);
-            il.EmitEx(i => emitAction(i, member))
-                .BoxIfValueType(memberType);
+            il.EmitEx(emitAction);
         }
         else
         {
             if (!isStatic)
                 il.LdArgIfClass(0, typeof(TTarget));
-            emitAction(il, member);
+            il.EmitEx(emitAction);
         }
 
         il.EmitEx(OpCodes.Ret);
@@ -256,17 +277,16 @@ public static partial class ReflectExtension
         MemberInfo member,
         Type memberType,
         bool isStatic,
-        Action<ILGenerator, MemberInfo> emitAction)
+        Action<ILGenerator> emitAction)
     {
         var targetType = typeof(TTarget);
-        var stronglyTyped = targetType != typeof(object);
+        var objType = typeof(object);
+        var stronglyTyped = targetType != objType;
 
         if (isStatic)
         {
-            il.EmitEx(OpCodes.Ldarg_1);
-            if (!stronglyTyped)
-                il.EmitEx(OpCodes.Unbox_Any, memberType);
-            il.EmitEx(i => emitAction(i, member))
+            il.EmitEx(OpCodes.Ldarg_1)
+                .EmitEx(emitAction)
                 .EmitEx(OpCodes.Ret);
             return;
         }
@@ -276,8 +296,7 @@ public static partial class ReflectExtension
             il.EmitEx(OpCodes.Ldarg_0)
                 .LdRefIfClass(targetType)
                 .EmitEx(OpCodes.Ldarg_1)
-                .EmitEx(OpCodes.Unbox_Any, memberType)
-                .EmitEx(i => emitAction(i, member))
+                .EmitEx(emitAction)
                 .EmitEx(OpCodes.Ret);
             return;
         }
@@ -289,8 +308,7 @@ public static partial class ReflectExtension
                 .EmitEx(OpCodes.Ldind_Ref)
                 .EmitEx(OpCodes.Castclass, targetType)
                 .EmitEx(OpCodes.Ldarg_1)
-                .EmitEx(OpCodes.Unbox_Any, memberType)
-                .EmitEx(i => emitAction(i, member))
+                .EmitEx(emitAction)
                 .EmitEx(OpCodes.Ret);
             return;
         }
@@ -303,7 +321,7 @@ public static partial class ReflectExtension
             .EmitEx(OpCodes.Ldloca, 0)
             .EmitEx(OpCodes.Ldarg_1)
             .EmitEx(OpCodes.Unbox_Any, memberType)
-            .EmitEx(i => emitAction(i, member))
+            .EmitEx(emitAction)
             .EmitEx(OpCodes.Ldarg_0)
             .EmitEx(OpCodes.Ldloc_0)
             .EmitEx(OpCodes.Box, targetType)

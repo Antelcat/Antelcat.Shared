@@ -24,7 +24,7 @@ public static partial class ILExtension
         
     public static ILGenerator BoxIfValueType(this ILGenerator il, Type type) => 
         type.IsValueType ? il.EmitEx(OpCodes.Box, type) : il;
-
+    
     public static ILGenerator LdArgIfClass(this ILGenerator il, int idx, Type type) => 
         il.EmitEx(!type.IsValueType ? OpCodes.Ldarg : OpCodes.Ldarga, idx);
 
