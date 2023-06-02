@@ -41,13 +41,13 @@ class SharedTest
     public void Test()
     {
         var type = typeof(TestClass);
-        var Prefix = "Ref";
+        var Prefix = "Value";
         var prop = type.GetProperty($"{Prefix}Prop")!;
         var field = type.GetField($"{Prefix}Field")!;
 
         var i = 1;
         var valueGetter = () => i++;
-        TestIL((TestClass)new TestClass(), prop, field, () => new RefClass());
+        TestIL((TestClass)new TestClass(), prop, field, () => i++);
         
         Debugger.Break();
     }

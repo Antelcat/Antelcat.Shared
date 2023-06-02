@@ -15,25 +15,24 @@ public static class JwtExtension<TIdentity> where TIdentity : class
             .Where(static x => x.CanRead)
             .ToDictionary(
                 static p => p.Name,
-                static p => new Tuple<Getter<object, object>, TypeConverter>(
-                    p.CreateGetter<object, object>(),
+                static p => new Tuple<Getter<TIdentity, object>, TypeConverter>(
+                    p.CreateGetter<TIdentity, object>(),
                     typeof(string).GetConverter(p.PropertyType)));
 
         WritableProps = props.Where(static x => x.CanWrite)
             .ToDictionary(
                 static p => p.Name,
-                static p => new Tuple<Setter<object, object>, TypeConverter>(
-                    p.CreateSetter<object, object>(),
+                static p => new Tuple<Setter<TIdentity, object>, TypeConverter>(
+                    p.CreateSetter<TIdentity, object>(),
                     typeof(string).GetConverter(p.PropertyType)));
     }
 
-    private static readonly IDictionary<string, Tuple<Getter<object, object>, TypeConverter>> ReadableProps;
-    private static readonly IDictionary<string, Tuple<Setter<object, object>, TypeConverter>> WritableProps;
+    private static readonly IDictionary<string, Tuple<Getter<TIdentity, object>, TypeConverter>> ReadableProps;
+    private static readonly IDictionary<string, Tuple<Setter<TIdentity, object>, TypeConverter>> WritableProps;
     private static TIdentity SetFromClaim(TIdentity identity, Claim claim)
     {
         if (!WritableProps.TryGetValue(claim.Type, out var tuple)) return identity;
-        var i = (object)identity;
-        tuple.Item1.Invoke(ref i!, tuple.Item2.ConvertTo(claim.Value));
+        tuple.Item1.Invoke(ref identity!, tuple.Item2.ConvertTo(claim.Value));
         return identity;
     }
     public static TIdentity? FromToken(TIdentity identity, string token)
