@@ -1,84 +1,104 @@
 ﻿using System.ComponentModel;
 using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Antelcat.Extensions;
 using Antelcat.Implements.Converters;
-using Antelcat.Shared.Extensions.DebugExtension;
 using NUnit.Framework;
 
-namespace Antelcat.Shared.Test
+namespace Antelcat.Shared.Test;
+
+public class TestClass
 {
-    class SharedTest
+    public string Getter => value;
+    public string Setter { set => this.value = value; }
+
+    public string value = "string";
+}
+
+class SharedTest
+{
+    private TypeConverter Converter;
+    [SetUp]
+    public void Setup()
     {
-        private TypeConverter Converter;
-        [SetUp]
-        public void Setup()
-        {
-            Converter = new StringToFloatConverter();
-        }
-
-        private const int Times = 1000;
-
-        [Test]
-        public void TestInline()
-        {
-            var times = Times;
-            var watch = new Stopwatch();
-            watch.Start();
-            while (times -- > 0)
-            {
-                "123".Inline(1, "", 3f);
-            }
-            watch.Stop();
-            Console.WriteLine($"Inline   Cost : {watch.ElapsedTicks}");
-            
-            times = Times;
-            watch = new Stopwatch();
-            watch.Start();
-            while (times -- > 0)
-            {
-                "123".NoInline(1, "", 3f);
-            }
-            watch.Stop();
-            Console.WriteLine($"Noinline Cost : {watch.ElapsedTicks}");
-            
-            Console.WriteLine();
-        }
-
-        [Test]
-        public async Task MultipleTest()
-        {
-            var i = 0;
-            while (i++ < 3)
-            {
-                await 1000;
-                Console.WriteLine($"预热{i}s");
-            }
-
-            var times = 5;
-            while (times-- > 0)
-            {
-                TestInline();
-            }
-        }
+        Converter = new StringToFloatConverter();
     }
 
-    public static class Extension
+    [Test]
+    public void Test()
     {
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public static void NoInline<T>(this T instance, int i1, string i2, float i3)
-        {
-            i3 = i2.Length + i1;
-            new StackTrace().GetFrames();
-        }
+        var instance = new TestClass();
+        var type = typeof(TestClass);
+        type.GetProperty("Setter")!.CreateSetter<TestClass, string>().Invoke(ref instance, "new string 1");
+        var str1 = type.GetProperty("Getter")!.CreateGetter<TestClass, string>().Invoke((TestClass)instance);
+        type.GetField("value")!.CreateSetter<TestClass, object>().Invoke(ref instance, "new string 2");
+        var str2 = type.GetProperty("Getter")!.CreateGetter<TestClass, string>().Invoke((TestClass)instance);
+        Debugger.Break();
+    }
         
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Inline<T>(this T instance, int i1, string i2, float i3)
+        
+    private const int Times = 1000;
+
+    [Test]
+    public void TestInline()
+    {
+        var times = Times;
+        var watch = new Stopwatch();
+        watch.Start();
+        while (times -- > 0)
         {
-            i3 = i2.Length + i1;
-            new StackTrace().GetFrames();
+            "123".Inline(1, "", 3f);
         }
+        watch.Stop();
+        Console.WriteLine($"Inline   Cost : {watch.ElapsedTicks}");
+            
+        times = Times;
+        watch = new Stopwatch();
+        watch.Start();
+        while (times -- > 0)
+        {
+            "123".NoInline(1, "", 3f);
+        }
+        watch.Stop();
+        Console.WriteLine($"Noinline Cost : {watch.ElapsedTicks}");
+            
+        Console.WriteLine();
+    }
+
+    [Test]
+    public async Task MultipleTest()
+    {
+        var i = 0;
+        while (i++ < 3)
+        {
+            await 1000;
+            Console.WriteLine($"预热{i}s");
+        }
+
+        var times = 5;
+        while (times-- > 0)
+        {
+            TestInline();
+        }
+    }
+}
+
+public static class Extension
+{
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    public static void NoInline<T>(this T instance, int i1, string i2, float i3)
+    {
+        i3 = i2.Length + i1;
+        new StackTrace().GetFrames();
+    }
+        
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static void Inline<T>(this T instance, int i1, string i2, float i3)
+    {
+        i3 = i2.Length + i1;
+        new StackTrace().GetFrames();
     }
 }

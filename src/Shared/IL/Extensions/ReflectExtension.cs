@@ -265,9 +265,9 @@ public static partial class ReflectExtension
         {
             il.EmitEx(OpCodes.Ldarg_1);
             if (!stronglyTyped)
-                il.EmitEx(OpCodes.Unbox_Any, memberType)
-                    .EmitEx(i => emitAction(i, member))
-                    .EmitEx(OpCodes.Ret);
+                il.EmitEx(OpCodes.Unbox_Any, memberType);
+            il.EmitEx(i => emitAction(i, member))
+                .EmitEx(OpCodes.Ret);
             return;
         }
 
@@ -276,6 +276,7 @@ public static partial class ReflectExtension
             il.EmitEx(OpCodes.Ldarg_0)
                 .LdRefIfClass(targetType)
                 .EmitEx(OpCodes.Ldarg_1)
+                .EmitEx(OpCodes.Unbox_Any, memberType)
                 .EmitEx(i => emitAction(i, member))
                 .EmitEx(OpCodes.Ret);
             return;
