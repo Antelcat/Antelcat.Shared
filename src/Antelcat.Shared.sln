@@ -25,14 +25,17 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.DependencyI
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.Runtime.CompileService", "Shared\Runtime.CompileService\Antelcat.Shared.Runtime.CompileService.shproj", "{9EE3F4BA-04A9-44B9-A75E-61D368E810E1}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.AspNetCore.DependencyInjection.Autowired", "Shared\AspNetCore\DependencyInjection.Autowired\Antelcat.Shared.AspNetCore.DependencyInjection.Autowired.shproj", "{D4F9EF9F-57E0-490A-89AA-B382BCC936E3}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.TypeConvert", "Shared\TypeConvert\Antelcat.Shared.TypeConvert.shproj", "{C840BAC0-E7EE-4145-B804-F1882171A356}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.Mvvm", "Shared\Mvvm\Antelcat.Shared.Mvvm.shproj", "{19FB3AAB-AD9F-4917-8429-1ED018E5E815}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.Serialization", "Shared\Serialization\Antelcat.Shared.Serialization.shproj", "{6E73D366-1CBC-4476-8449-9BD9DD200B1D}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.AspNetCore.DependencyInjection.Autowired", "Shared\AspNetCore\DependencyInjection.Autowired\Antelcat.Shared.AspNetCore.DependencyInjection.Autowired.shproj", "{D4F9EF9F-57E0-490A-89AA-B382BCC936E3}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.AspNetCore.Authentication.JwtBearer", "Shared\AspNetCore\Authentication\JwtBearer\Antelcat.Shared.AspNetCore.Authentication.JwtBearer.shproj", "{409AD0C0-E7AF-40F7-A52B-EAAF4A87CFF8}"
+EndProject
+
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Antelcat.Shared.NET", "Build\.NET\Antelcat.Shared.NET.csproj", "{FA79373C-D0B0-403B-8B92-4CD8ADB49ADA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Antelcat.Shared.NET Standard", "Build\.NET Standard\Antelcat.Shared.NET Standard.csproj", "{085D4754-669A-4964-94CC-18B568864CDC}"
@@ -57,6 +60,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{26C7871C-F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AspNetCore", "AspNetCore", "{5986C05D-5FDF-4D35-8801-8983F6659BD1}"
 EndProject
+
 
 
 Global
@@ -118,6 +122,7 @@ Global
 		{5986C05D-5FDF-4D35-8801-8983F6659BD1} = {FCC570C0-6909-44AA-BA2B-D176C94B04E5}
 		{19FB3AAB-AD9F-4917-8429-1ED018E5E815} = {FCC570C0-6909-44AA-BA2B-D176C94B04E5}
 		{6E73D366-1CBC-4476-8449-9BD9DD200B1D} = {FCC570C0-6909-44AA-BA2B-D176C94B04E5}
+		{409AD0C0-E7AF-40F7-A52B-EAAF4A87CFF8} = {5986C05D-5FDF-4D35-8801-8983F6659BD1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D6FBF73E-4457-4797-B187-E3AB0EF6F24B}
