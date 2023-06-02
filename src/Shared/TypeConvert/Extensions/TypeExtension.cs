@@ -34,6 +34,13 @@ public static partial class TypeExtension
         return false;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="thisType"></param>
+    /// <param name="toType"></param>
+    /// <returns></returns>
+    /// <exception cref="NotSupportedException"></exception>
     public static TypeConverter GetConverter(this Type thisType, Type toType) =>
         TryGetConverter(thisType, toType, out var ret)
             ? ret
