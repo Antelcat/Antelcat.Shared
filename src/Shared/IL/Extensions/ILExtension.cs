@@ -4,7 +4,6 @@ using System.Reflection.Emit;
 
 namespace Antelcat.Extensions;
 
-// ReSharper disable once InconsistentNaming
 public static partial class ILExtension
 {
     public static ILGenerator CallOrVirtualEx(this ILGenerator il, MethodInfo method) =>
