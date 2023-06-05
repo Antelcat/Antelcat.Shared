@@ -4,7 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-namespace Antelcat.Shared.Extensions.DebugExtension
+namespace Antelcat.Extensions.DebugExtension
 {
     public static class DebugExtension
     {
