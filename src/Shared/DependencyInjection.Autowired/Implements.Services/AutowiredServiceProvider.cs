@@ -157,13 +157,20 @@ public class AutowiredServiceProvider<TAttribute>
 
     private object GetServicesInternal(IEnumerable<object> targets, Type serviceType)
     {
-        var types = serviceType.GenericTypeArguments;
-        if (types.Length == 0) throw new ArgumentException($"Service type {serviceType} has no generic type");
-        var type = types[0];
-        if (!TryGetServiceLifetime(type,  out var lifetime))
+        var enumerable = targets as object[] ?? targets.ToArray();
+        if (!enumerable.Any()) return targets;
+        var type = serviceType;
+        if (!TryGetServiceLifetime(type, out var lifetime))
         {
-            throw new SerializationException($"Service {serviceType} lifetime uncertain");
+            var types = serviceType.GenericTypeArguments;
+            if (types.Length == 0) throw new ArgumentException($"Service type {serviceType} has no generic type");
+            type = types[0];
+            if (!TryGetServiceLifetime(type, out lifetime))
+            {
+                return targets;
+            }
         }
+
         switch (lifetime)
         {
             case ServiceLifetime.Singleton:
@@ -174,14 +181,14 @@ public class AutowiredServiceProvider<TAttribute>
                 break;
         }
 
-        targets.ForEach(Autowired);
+        enumerable.ForEach(Autowired);
         return targets;
     }
 
     private object? GetServiceInternal(object instance, Type serviceType) =>
         TryGetServiceLifetime(serviceType, out var lifetime)
             ? AutowiredService(instance, serviceType, lifetime)
-            : throw new SerializationException($"Service {serviceType} lifetime uncertain");
+            : instance;
 
 
     private object? GetServiceDependency(object? target, Type serviceType, ServiceLifetime lifetime) =>
@@ -212,13 +219,13 @@ public class AutowiredServiceProvider<TAttribute>
         {
             null => null,
             IEnumerable<object> collection => GetServicesInternal(collection, dependencyType),
-            _ => TryGetServiceLifetime(dependencyType,  out var targetLifetime)
+            _ => TryGetServiceLifetime(dependencyType, out var targetLifetime)
                 ? GetServiceDependency(dep, dependencyType, targetLifetime)
-                : throw new SerializationException($"Dependency {dependencyType} lifetime uncertain")
+                : dep
         };
     }
 
-    private bool TryGetServiceLifetime(Type serviceType,  out ServiceLifetime serviceLifetime) =>
+    private bool TryGetServiceLifetime(Type serviceType, out ServiceLifetime serviceLifetime) =>
         SharedInfos.ServiceLifetimes!.Value.TryGetValue(serviceType, out serviceLifetime)
         || serviceType.IsGenericType
         && SharedInfos.ServiceLifetimes.Value.TryGetValue(serviceType.GetGenericTypeDefinition(),
