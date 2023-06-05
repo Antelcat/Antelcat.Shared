@@ -175,13 +175,13 @@ public static partial class ReflectExtension
                     if (field.FieldType == typeof(bool))
                         e.EmitEx(OpCodes.Ldc_I4_1);
                     else if (field.FieldType == typeof(int))
-                        e.EmitEx(OpCodes.Ldc_I4, (int)field.GetRawConstantValue());
+                        e.EmitEx(OpCodes.Ldc_I4, (int)field.GetRawConstantValue()!);
                     else if (field.FieldType == typeof(float))
-                        e.EmitEx(OpCodes.Ldc_R4, (float)field.GetRawConstantValue());
+                        e.EmitEx(OpCodes.Ldc_R4, (float)field.GetRawConstantValue()!);
                     else if (field.FieldType == typeof(double))
-                        e.EmitEx(OpCodes.Ldc_R8, (double)field.GetRawConstantValue());
+                        e.EmitEx(OpCodes.Ldc_R8, (double)field.GetRawConstantValue()!);
                     else if (field.FieldType == typeof(string))
-                        e.EmitEx(OpCodes.Ldstr, (string)field.GetRawConstantValue());
+                        e.EmitEx(OpCodes.Ldstr, (string)field.GetRawConstantValue()!);
                     else
                         throw new NotSupportedException(
                             $"Cannot create a FieldGetter for type: {field.FieldType.Name}");
