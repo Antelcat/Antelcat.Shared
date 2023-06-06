@@ -36,7 +36,7 @@ public class JwtConfigure<TIdentity> where TIdentity : class
         notBefore: DateTime.Now);
 
     public TokenValidationParameters Parameters =>
-        parameters ??= new TokenValidationParameters()
+        parameters ??= new TokenValidationParameters
         {
             ValidIssuer = Assembly.GetExecutingAssembly().GetName().Name,
             ValidAudience = Assembly.GetExecutingAssembly().GetName().Name,
