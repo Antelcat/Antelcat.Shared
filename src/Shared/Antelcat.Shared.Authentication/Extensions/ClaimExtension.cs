@@ -19,15 +19,14 @@ public static class ClaimExtension<TIdentity>
 
     static ClaimExtension()
     {
-        var identityType = typeof(TIdentity);
-        var props = identityType.GetProperties();
-        Props = props
-            .Where(static x => x.CanRead && x.CanWrite)
+        Props = typeof(TIdentity)
+            .GetProperties()
+            .Where(static x => x is { CanRead: true, CanWrite: true })
             .ToDictionary(
                 static p => p.GetCustomAttribute<ClaimTypeAttribute>()?.Type ?? p.Name,
                 static p => new Tuple<
-                    Getter<TIdentity, object>, 
-                    Setter<TIdentity, object>, 
+                    Getter<TIdentity, object>,
+                    Setter<TIdentity, object>,
                     TypeConverter>(
                     p.CreateGetter<TIdentity, object>(),
                     p.CreateSetter<TIdentity, object>(),

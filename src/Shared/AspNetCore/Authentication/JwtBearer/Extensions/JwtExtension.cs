@@ -8,7 +8,7 @@ namespace Antelcat.Extensions;
 
 public static class JwtExtension
 {
-    public static TIdentity? FromToken<TIdentity>(this TIdentity identity, string token)
+    public static TIdentity? FromToken<TIdentity>(this TIdentity identity, string token) where TIdentity : class
     {
         try
         {
@@ -18,7 +18,7 @@ public static class JwtExtension
         }
         catch
         {
-            return default;
+            return null;
         }
     }
     public static TIdentity FromClaims<TIdentity>(this TIdentity identity, IEnumerable<Claim> claims)
