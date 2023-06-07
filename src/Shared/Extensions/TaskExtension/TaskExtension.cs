@@ -7,8 +7,25 @@ namespace Antelcat.Extensions;
 #nullable enable
 public static class TaskExtension
 {
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TaskAwaiter GetAwaiter(this int delay) => 
-        Task.Delay(delay).GetAwaiter();
+	    Task.Delay(delay).GetAwaiter();
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Task RunAsync(this Action action, CancellationToken? token = null) =>
+	    Task.Run(action, token ?? default);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Task<T> RunAsync<T>(this Func<T> func, CancellationToken? token = null) =>
+	    Task.Run(func, token ?? default);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static TaskAwaiter GetAwaiter(this Action action) => 
+	    action.RunAsync().GetAwaiter();
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static TaskAwaiter<T> GetAwaiter<T>(this Func<T> func) => 
+	    func.RunAsync().GetAwaiter();
 
 	public static void Detach(this Task task, Action<Exception>? exceptionHandler = null) 
 	{

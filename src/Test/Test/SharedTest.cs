@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System;
 using System.Diagnostics;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -120,10 +121,19 @@ class SharedTest
             TestInline();
         }
     }
+
+    
+    [Test]
+    public async Task TestTask()
+    {
+        int Fun() => 3;
+        var i = await (Func<int>)Fun;
+    }
 }
 
 public static class Extension
 {
+    
     [MethodImpl(MethodImplOptions.NoInlining)]
     public static void NoInline<T>(this T instance, int i1, string i2, float i3)
     {
