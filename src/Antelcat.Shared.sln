@@ -31,6 +31,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.Mvvm", "Sha
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.Serialization", "Shared\Serialization\Antelcat.Shared.Serialization.shproj", "{6E73D366-1CBC-4476-8449-9BD9DD200B1D}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.Authentication", "Shared\Authentication\Antelcat.Shared.Authentication.shproj", "{8B3F6AFB-8EAC-4287-88B1-27AE63A8AA5D}"
+EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.AspNetCore.DependencyInjection.Autowired", "Shared\AspNetCore\DependencyInjection.Autowired\Antelcat.Shared.AspNetCore.DependencyInjection.Autowired.shproj", "{D4F9EF9F-57E0-490A-89AA-B382BCC936E3}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.AspNetCore.Authentication.JwtBearer", "Shared\AspNetCore\Authentication\JwtBearer\Antelcat.Shared.AspNetCore.Authentication.JwtBearer.shproj", "{409AD0C0-E7AF-40F7-A52B-EAAF4A87CFF8}"
@@ -62,8 +64,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AspNetCore", "AspNetCore", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication", "Authentication", "{FE032BEE-A678-4546-8A2D-94590DA575CF}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.Authentication", "Shared\Antelcat.Shared.Authentication\Antelcat.Shared.Authentication.shproj", "{8B3F6AFB-8EAC-4287-88B1-27AE63A8AA5D}"
-EndProject
+
 
 
 
