@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using Antelcat.Core.Extensions;
 using Antelcat.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +22,7 @@ public static partial class ServiceExtension
         Action<JwtConfigure<TIdentity>>? configure = null,
         Func<TIdentity, TokenValidatedContext, Task>? validation = null,
         Func<JwtBearerChallengeContext, string>? failed = null)
-        where TIdentity : class, new()
+        where TIdentity : class
     {
         var config = new JwtConfigure<TIdentity>();
         configure?.Invoke(config);
@@ -43,7 +44,7 @@ public static partial class ServiceExtension
                         : async context =>
                         {
                             var token = (context.SecurityToken as JwtSecurityToken)!.RawData;
-                            var identity = new TIdentity().FromToken(token);
+                            var identity = (typeof(TIdentity).RawInstance() as TIdentity)!.FromToken(token);
                             if (identity == null)
                             {
                                 context.Fail(
