@@ -19,7 +19,8 @@
 		{ "ulong", "MinValue" },
 		{ "double", "NaN" }, 
 		{ "float", "NaN" }, 
-		{ "DateTime", "MinValue" }
+		{ "DateTime", "MinValue" },
+		{ "Guid", "Empty" }
 	}; 
 #>
 #if !NET && !NETSTANDARD

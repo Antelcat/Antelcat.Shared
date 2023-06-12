@@ -17,7 +17,8 @@
 		"ulong",
 		"double",
 		"float",
-		"DateTime"
+		"DateTime",
+		"Guid"
 	};
 	var classes = new Dictionary<string,string>();
 #>

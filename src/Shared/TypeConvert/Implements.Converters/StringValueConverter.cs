@@ -278,6 +278,33 @@ public class StringToDateTimeConverter : TypeConverter
 		Type sourceType) => sourceType == typeof(DateTime);
 }
 
+///<summary>
+/// Convert between <see cref="string"/> and <see cref="Guid"/>
+///</summary>
+public class StringToGuidConverter : TypeConverter
+{
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public override object ConvertTo(
+		ITypeDescriptorContext? _, 
+		CultureInfo? __, 
+		object? value, 
+		Type ___) => (value as string).ToGuid();
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+   	public override object? ConvertFrom(
+		ITypeDescriptorContext? _, 
+		CultureInfo? __, 
+		object value) => value.ToString();
+
+   	public override bool CanConvertTo(
+		ITypeDescriptorContext? _, 
+		Type? destinationType) => destinationType == typeof(Guid);
+
+   	public override bool CanConvertFrom(
+		ITypeDescriptorContext? _, 
+		Type sourceType) => sourceType == typeof(Guid);
+}
+
 
 public static class StringValueConverters
 {
@@ -293,6 +320,7 @@ public static class StringValueConverters
 		{ typeof(double) , new StringToDoubleConverter() },
 		{ typeof(float) , new StringToFloatConverter() },
 		{ typeof(DateTime) , new StringToDateTimeConverter() },
+		{ typeof(Guid) , new StringToGuidConverter() },
 	};
 
 	public static bool FindByType(Type type, out TypeConverter? converter) 

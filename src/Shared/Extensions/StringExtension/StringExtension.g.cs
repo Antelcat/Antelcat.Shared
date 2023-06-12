@@ -60,5 +60,11 @@ public static partial class StringExtension
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static DateTime ToDateTime(this string? str) => DateTime.TryParse(str,out var result) ? result : DateTime.MinValue;
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static bool ToGuid(this string? str,out Guid result) => Guid.TryParse(str,out result);
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Guid ToGuid(this string? str) => Guid.TryParse(str,out var result) ? result : Guid.Empty;
+
 
 }
