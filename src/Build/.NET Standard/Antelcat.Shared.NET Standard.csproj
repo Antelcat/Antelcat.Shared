@@ -29,5 +29,6 @@
     <Import Project="..\..\Shared\Extensions\MarshalExtension\Antelcat.Shared.Extensions.MarshalExtension.projitems" Label="Shared" />
     <Import Project="..\..\Shared\Mvvm\Antelcat.Shared.Mvvm.projitems" Label="Shared" />
     <Import Project="..\..\Shared\Authentication\Antelcat.Shared.Authentication.projitems" Label="Shared" />
+    <Import Project="..\..\Shared\Extensions\TypeExtension\Antelcat.Shared.Extensions.TypeExtension.projitems" Label="Shared" />
 
 </Project>

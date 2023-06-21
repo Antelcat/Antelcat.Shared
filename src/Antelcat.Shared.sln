@@ -19,6 +19,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.Extensions.
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.Extensions.MarshalExtension", "Shared\Extensions\MarshalExtension\Antelcat.Shared.Extensions.MarshalExtension.shproj", "{296E8C4B-59CE-4EE0-B835-7F9CD1ABC732}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.Extensions.TypeExtension", "Shared\Extensions\TypeExtension\Antelcat.Shared.Extensions.TypeExtension.shproj", "{F024A904-CD1B-43CA-987C-D7B4973CBBA1}"
+EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.IL", "Shared\IL\Antelcat.Shared.IL.shproj", "{3AB3FD3D-C47D-4B09-87D7-299ABCE37BD2}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Antelcat.Shared.DependencyInjection.Autowired", "Shared\DependencyInjection.Autowired\Antelcat.Shared.DependencyInjection.Autowired.shproj", "{C1EEE7E2-07F3-4970-9489-783254DE0F8D}"
@@ -63,6 +65,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AspNetCore", "AspNetCore", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication", "Authentication", "{FE032BEE-A678-4546-8A2D-94590DA575CF}"
 EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +128,7 @@ Global
 		{F08725ED-2CB0-49B2-B03A-A4A31EEA1854} = {FCC570C0-6909-44AA-BA2B-D176C94B04E5}
 		{5986C05D-5FDF-4D35-8801-8983F6659BD1} = {FCC570C0-6909-44AA-BA2B-D176C94B04E5}
 		{FE032BEE-A678-4546-8A2D-94590DA575CF} = {5986C05D-5FDF-4D35-8801-8983F6659BD1}
+		{F024A904-CD1B-43CA-987C-D7B4973CBBA1} = {F08725ED-2CB0-49B2-B03A-A4A31EEA1854}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D6FBF73E-4457-4797-B187-E3AB0EF6F24B}

@@ -82,4 +82,5 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\Shared\Mvvm\Antelcat.Shared.Mvvm.projitems" Label="Shared" />
   <Import Project="..\..\Shared\Authentication\Antelcat.Shared.Authentication.projitems" Label="Shared" />
+  <Import Project="..\..\Shared\Extensions\TypeExtension\Antelcat.Shared.Extensions.TypeExtension.projitems" Label="Shared" />
 </Project>

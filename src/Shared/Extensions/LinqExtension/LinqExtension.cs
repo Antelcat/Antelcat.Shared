@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
@@ -11,4 +12,7 @@ public static class LinqExtension
     {
         foreach (var item in source) action(item);
     }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool IsNullOrEmpty(this IList? list) => list == null || list.Count == 0;
 }
