@@ -43,4 +43,7 @@ public static partial class StringExtension
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool ToBool(this string? str) => bool.TryParse(str, out var result) && result;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static string Format(this string str, params object[] args) => string.Format(str, args);
 }
