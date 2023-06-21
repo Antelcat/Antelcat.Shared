@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections;
+﻿#if !NET && !NETSTANDARD
+using System;
 using System.Collections.Generic;
+using System.Linq;
+#endif
+using System.Collections;
 using System.Runtime.CompilerServices;
 
 namespace Antelcat.Extensions;
 
-public static class LinqExtension
+public static partial class LinqExtension
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
@@ -14,5 +17,24 @@ public static class LinqExtension
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool IsNullOrEmpty(this IList? list) => list == null || list.Count == 0;
+    public static bool IsNullOrEmpty<T>(this IEnumerable<T>? enumerable) => enumerable == null || !enumerable.Any();
+    
+    public static Dictionary<TKey, TValue> Merge<TKey, TValue>(
+        this IDictionary<TKey, TValue> first,
+        IDictionary<TKey, TValue> second)
+        where TKey : notnull
+    {
+        var result = new Dictionary<TKey, TValue>();
+        foreach (var key in first.Keys)
+        {
+            result[key] = first[key];
+        }
+        foreach (var key in second.Keys)
+        {
+            result[key] = second[key];
+        }
+        return result;
+    }
+    
+    public static string Join<T>(this IEnumerable<T> source,string separator) => string.Join(separator,source);
 }

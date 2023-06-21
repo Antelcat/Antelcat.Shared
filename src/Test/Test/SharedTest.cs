@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -128,6 +129,21 @@ class SharedTest
     {
         int Fun() => 3;
         var i = await (Func<int>)Fun;
+    }
+
+    [Test]
+    public void TestCompare()
+    {
+        if (new Dictionary<string, string>
+            {
+                { "123", "sss" }
+            }.DeepEquals(new Dictionary<string, string>
+            {
+                { "123", "sss" }
+            }))
+        {
+            Debugger.Break();
+        }
     }
 }
 

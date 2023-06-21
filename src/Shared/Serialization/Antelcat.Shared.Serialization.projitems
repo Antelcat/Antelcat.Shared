@@ -10,7 +10,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Enums\SerializeOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\JsonElementExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\JsonElementExtension.g.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JsonExtension.g.tt</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\SerializeExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Implements.Converters\JsonDateTimeConverter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Extensions\JsonElementExtension.g.tt" />
   </ItemGroup>
 </Project>

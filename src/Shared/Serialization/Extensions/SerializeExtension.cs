@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace Antelcat.Extensions;
 
-public static class SerializeExtension
+public static partial class SerializeExtension
 {
     #region Privates
 

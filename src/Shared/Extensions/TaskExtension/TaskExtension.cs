@@ -67,4 +67,48 @@ public static class TaskExtension
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void Detach<T>(this ValueTask<T> task, Action<Exception>? exceptionHandler = null) => Detach((Task)task.AsTask(), exceptionHandler);
+	
+	public static async Task WithTimeout(this Task task, TimeSpan timeout, Action? cancelled = null)
+	{
+		using var timerCancellation = new CancellationTokenSource();
+		var timeoutTask = Task.Delay(timeout, timerCancellation.Token);
+		var firstCompletedTask = await Task.WhenAny(task, timeoutTask).ConfigureAwait(false);
+		if (firstCompletedTask == timeoutTask)
+		{
+			if (cancelled == null)
+			{
+				throw new TimeoutException();
+			}
+			cancelled();
+		}
+		timerCancellation.Cancel();
+		await task.ConfigureAwait(false);
+	}
+	
+	public static async Task<T> WithTimeout<T>(this Task<T> task, TimeSpan timeout, Action? cancelled = null)
+	{
+		await WithTimeout((Task)task, timeout, cancelled).ConfigureAwait(false);
+		return task.GetAwaiter().GetResult();
+	}
+	
+	public static TaskCompletionSource<TResult> WithTimeout<TResult>(this TaskCompletionSource<TResult> taskCompletionSource, TimeSpan timeout)
+	{
+		return WithTimeout(taskCompletionSource, timeout, null);
+	}
+
+	public static TaskCompletionSource<TResult> WithTimeout<TResult>(this TaskCompletionSource<TResult> taskCompletionSource, TimeSpan timeout, Action? cancelled)
+	{
+		Timer? timer = null;
+		timer = new Timer(_ =>
+		{
+			timer?.Dispose();
+			if (taskCompletionSource.Task.Status == TaskStatus.RanToCompletion) return;
+			taskCompletionSource.TrySetCanceled();
+			cancelled?.Invoke();
+		}, null, timeout, TimeSpan.FromMilliseconds(-1));
+
+		return taskCompletionSource;
+	}
+
+
 }
