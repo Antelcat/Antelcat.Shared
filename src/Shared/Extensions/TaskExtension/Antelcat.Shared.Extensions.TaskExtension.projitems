@@ -10,5 +10,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)TaskExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TaskExtension.g.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TaskExtension.g.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)TaskExtension.g.tt" />
   </ItemGroup>
 </Project>
