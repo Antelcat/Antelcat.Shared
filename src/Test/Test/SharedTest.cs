@@ -2,12 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Antelcat.Extensions;
+using Antelcat.Implements;
 using Antelcat.Implements.Converters;
+using Antelcat.Shared.NET.Interfaces;
 using NUnit.Framework;
 
 namespace Antelcat.Shared.Test;
@@ -144,6 +149,18 @@ class SharedTest
         {
             Debugger.Break();
         }
+    }
+
+    delegate uint H();
+
+    delegate void GetDelegateForFunctionPointerInternal();
+    [Test]
+    public unsafe void TestNative()
+    {
+        var handler = new FileInfo(
+                @"D:\Shared\WorkSpace\Git\libuv-sharp\LibuvSharp\LibuvSharp.Test\bin\Debug\net7.0\runtimes\win-x64\native\libuv.dll")
+            .GetFunctionDelegate<Func<nint>>("uv_version");
+        var version = handler.Invoke();
     }
 }
 
