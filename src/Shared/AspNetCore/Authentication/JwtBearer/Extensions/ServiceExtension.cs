@@ -13,12 +13,14 @@ public static partial class ServiceExtension
     /// </summary>
     /// <param name="services">服务容器</param>
     /// <param name="configure">Jwt基础配置</param>
+    /// <param name="received">预处理</param>
     /// <param name="validation">Jwt验证通过二级校验</param>
     /// <param name="failed">校验失败的返回报文处理</param>
     /// <typeparam name="TIdentity">验证关联的身份模型</typeparam>
-    public static void ConfigureJwt<TIdentity>(
+    public static IServiceCollection ConfigureJwt<TIdentity>(
         this IServiceCollection services,
         Action<JwtConfigure<TIdentity>>? configure = null,
+        Func<MessageReceivedContext,Task>? received = null,
         Func<TIdentity, TokenValidatedContext, Task>? validation = null,
         Func<JwtBearerChallengeContext, string>? failed = null)
         where TIdentity : class
@@ -29,8 +31,9 @@ public static partial class ServiceExtension
             .AddSingleton(config)
             .AddAuthentication(static options =>
             {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(o =>
             {
@@ -38,6 +41,7 @@ public static partial class ServiceExtension
                 o.TokenValidationParameters = config.Parameters;
                 o.Events = new JwtBearerEvents
                 {
+                    OnMessageReceived = context => received?.Invoke(context) ?? Task.CompletedTask,
                     OnTokenValidated = validation == null
                         ? static _ => Task.CompletedTask
                         : async context =>
@@ -67,6 +71,7 @@ public static partial class ServiceExtension
                     }
                 };
             });
+        return services;
     }
 
 }
