@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace Antelcat.Extensions;
 #nullable enable
@@ -46,4 +47,27 @@ public static partial class StringExtension
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string Format(this string str, params object[] args) => string.Format(str, args);
+
+    /// <summary>
+    /// 使用<see cref="Encoding.UTF8"/>为默认编码字符集
+    /// </summary>
+    /// <param name="str">字符串</param>
+    /// <returns></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static
+#if NETSTANDARD2_1_OR_GREATER || NET
+        ReadOnlySpan<byte>
+#else
+            byte[]
+#endif
+            GetBytes(this string str) => Encoding.UTF8.GetBytes(str);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static 
+#if NETSTANDARD2_1_OR_GREATER || NET
+        ReadOnlySpan<byte> 
+#else
+        byte[]
+#endif
+        GetBytes(this string str, Encoding encoding) => encoding.GetBytes(str);
 }
