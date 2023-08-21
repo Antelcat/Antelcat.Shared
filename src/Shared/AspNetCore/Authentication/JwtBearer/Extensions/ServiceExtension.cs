@@ -1,4 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using Antelcat.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -18,6 +19,7 @@ public static partial class ServiceExtension
     /// <param name="configure">Jwt基础配置</param>
     /// <param name="received">预处理</param>
     /// <param name="validation">Jwt验证通过二级校验</param>
+    /// <param name="denied">权限禁止返回报文处理</param>
     /// <param name="failed">校验失败的返回报文处理</param>
     /// <typeparam name="TIdentity">验证关联的身份模型</typeparam>
     public static IServiceCollection ConfigureJwt<TIdentity>(
@@ -26,6 +28,7 @@ public static partial class ServiceExtension
         Action<JwtConfigure<TIdentity>>? configure = null,
         Func<MessageReceivedContext,Task>? received = null,
         Func<TIdentity, TokenValidatedContext, Task>? validation = null,
+        Func<ForbiddenContext, string>? denied = null,
         Func<JwtBearerChallengeContext, string>? failed = null)
         where TIdentity : class
     {
@@ -57,7 +60,16 @@ public static partial class ServiceExtension
                                 await validation.Invoke(identity, context);
                             }
                         },
-
+                    OnForbidden = async context =>
+                    {
+                        if (denied == null) return;
+                        context.Response.Clear();
+                        context.Response.Headers.Clear();
+                        context.Response.ContentType = "application/json";
+                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        await context.Response.WriteAsync(denied(context));
+                    },
+             
                     OnChallenge = async context =>
                     {
                         if (failed == null) return;
@@ -78,6 +90,7 @@ public static partial class ServiceExtension
         string scheme = CookieAuthenticationDefaults.AuthenticationScheme,
         Action<CookieBuilder>? configure = null,
         Func<TIdentity,  CookieValidatePrincipalContext, Task>? validation = null,
+        Func< RedirectContext<CookieAuthenticationOptions>, string>? denied = null,
         Func<RedirectContext<CookieAuthenticationOptions>, string>? failed = null)
         where TIdentity : class
     {
@@ -98,6 +111,15 @@ public static partial class ServiceExtension
                                 await validation.Invoke(typeof(TIdentity).RawInstance<TIdentity>()
                                     .FromClaims(context.HttpContext.User.Claims), context);
                             },
+                    OnRedirectToAccessDenied = async context =>
+                    {
+                        if (denied == null) return;
+                        context.Response.Clear();
+                        context.Response.Headers.Clear();
+                        context.Response.ContentType = "application/json";
+                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        await context.Response.WriteAsync(denied(context));
+                    },
                     OnRedirectToLogin = async context =>
                     {
                         if (failed == null) return;
