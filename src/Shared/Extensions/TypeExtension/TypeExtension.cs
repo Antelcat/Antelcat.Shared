@@ -22,6 +22,13 @@ public static partial class TypeExtension
     /// <returns></returns>
     public static T RawInstance<T>() => (T)FormatterServices.GetUninitializedObject(typeof(T));
     /// <summary>
+    /// 创建未初始化的对象
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    /// <exception cref="SerializationException"></exception>
+    public static T RawInstance<T>(this Type type) => (T)FormatterServices.GetUninitializedObject(type);
+    /// <summary>
     /// 创建一个对象
     /// </summary>
     /// <param name="type"></param>
