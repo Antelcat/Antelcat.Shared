@@ -1,9 +1,5 @@
-﻿using System.Diagnostics;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net.Mime;
+﻿using System.IdentityModel.Tokens.Jwt;
 using Antelcat.Utils;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
