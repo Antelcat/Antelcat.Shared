@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Mime;
 using Antelcat.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -116,7 +117,7 @@ public static partial class ServiceExtension
                         if (denied == null) return;
                         context.Response.Clear();
                         context.Response.Headers.Clear();
-                        context.Response.ContentType = "application/json";
+                        context.Response.ContentType = MediaTypeNames.Application.Json;
                         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                         await context.Response.WriteAsync(denied(context));
                     },
@@ -125,7 +126,7 @@ public static partial class ServiceExtension
                         if (failed == null) return;
                         context.Response.Clear();
                         context.Response.Headers.Clear();
-                        context.Response.ContentType = "application/json";
+                        context.Response.ContentType = MediaTypeNames.Application.Json;
                         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                         await context.Response.WriteAsync(failed(context));
                     }
