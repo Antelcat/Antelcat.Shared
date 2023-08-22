@@ -9,6 +9,7 @@
     <Import_RootNamespace>Antelcat.Shared.Authentication</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\ClaimIgnoreAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Attributes\ClaimTypeAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ClaimExtension.cs" />
   </ItemGroup>

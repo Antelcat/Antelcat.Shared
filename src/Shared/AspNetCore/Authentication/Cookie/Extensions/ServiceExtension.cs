@@ -17,7 +17,7 @@ public static partial class ServiceExtension
         string scheme = CookieAuthenticationDefaults.AuthenticationScheme,
         Action<CookieBuilder>? configure = null,
         Func<TIdentity,  CookieValidatePrincipalContext, Task>? validation = null,
-        Func< RedirectContext<CookieAuthenticationOptions>, string>? denied = null,
+        Func<RedirectContext<CookieAuthenticationOptions>, string>? denied = null,
         Func<RedirectContext<CookieAuthenticationOptions>, string>? failed = null)
         where TIdentity : class
     {

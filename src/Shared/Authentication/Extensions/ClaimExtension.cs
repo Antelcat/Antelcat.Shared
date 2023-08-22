@@ -21,7 +21,8 @@ public static class ClaimExtension<TIdentity>
     {
         Props = typeof(TIdentity)
             .GetProperties()
-            .Where(static x => x is { CanRead: true, CanWrite: true })
+            .Where(static x =>
+                x is { CanRead: true, CanWrite: true } && x.GetCustomAttribute<ClaimIgnoreAttribute>() == null)
             .ToDictionary(
                 static p => p.GetCustomAttribute<ClaimTypeAttribute>()?.Type ?? p.Name,
                 static p => new Tuple<
