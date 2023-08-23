@@ -5,6 +5,7 @@ using Antelcat.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -59,5 +60,24 @@ public static partial class ServiceExtension
                 };
             });
         return services;
+    }
+
+    public static IServiceCollection ConfigureSharedCookie<TIdentity>(
+        this IServiceCollection services,
+        string scheme = CookieAuthenticationDefaults.AuthenticationScheme,
+        Action<CookieBuilder>? configure = null,
+        Func<TIdentity, CookieValidatePrincipalContext, Task>? validation = null,
+        Func<RedirectContext<CookieAuthenticationOptions>, string>? denied = null,
+        Func<RedirectContext<CookieAuthenticationOptions>, string>? failed = null)
+        where TIdentity : class
+    {
+        services
+            .AddDataProtection()
+            .SetApplicationName("SharedCookieApp");
+        return services.ConfigureCookie(scheme, c =>
+        {
+            c.Name = ".AspNet.SharedCookie";
+            configure?.Invoke(c);
+        }, validation, denied, failed);
     }
 }
