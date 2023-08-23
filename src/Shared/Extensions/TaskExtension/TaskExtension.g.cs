@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 
 namespace Antelcat.Extensions;
 
-public static partial class ILExtension
+public static partial class TaskExtension
 {
 	public static Boolean WaitAll(this Task[] tasks, TimeSpan timeout) => Task.WaitAll(tasks, timeout);
 

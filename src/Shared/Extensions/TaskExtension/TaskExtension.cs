@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Antelcat.Extensions;
 #nullable enable
-public static class TaskExtension
+public static partial class TaskExtension
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TaskAwaiter GetAwaiter(this int delay) => 

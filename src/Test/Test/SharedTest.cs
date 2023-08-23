@@ -162,6 +162,18 @@ class SharedTest
             .GetFunctionDelegate<Func<nint>>("uv_version");
         var version = handler.Invoke();
     }
+    
+    [Test]
+    public void TestEnumerable()
+    {
+        var list = new List<string>();
+        for(var i = 0 ; i< 100 ; i++){
+            list.Add($"{i}");
+        }
+        foreach(var item in list.WithIndex()){
+            Console.WriteLine(item);
+        }
+    }
 }
 
 public static class Extension
