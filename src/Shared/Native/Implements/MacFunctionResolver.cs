@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if !NET && !NETSTANDARD
+using System;
+#endif
 using System.Runtime.InteropServices;
 
 namespace Antelcat.Implements;

@@ -4,9 +4,10 @@ using System.Collections.Generic;
 #else
 using System.Diagnostics.CodeAnalysis;
 #endif
+using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using Antelcat.Shared.NET.Interfaces;
+using Antelcat.Interfaces;
 
 namespace Antelcat.Implements;
 #nullable enable
@@ -20,10 +21,10 @@ public abstract class FunctionResolverBase : IFunctionResolver
             .GetMethod(nameof(GetDelegateForFunctionPointerInternal),
                 BindingFlags.Static | BindingFlags.NonPublic)!
             .CreateDelegate(typeof(Func<IntPtr, Type, object>));
-    
+
     public bool TryGetFunctionDelegate<T>(string libraryPath, string functionName,
 #if NET || NETSTANDARD
-        [NotNullWhen(true)] 
+        [NotNullWhen(true)]
 #endif
         out T? handler)
         where T : Delegate
@@ -33,11 +34,11 @@ public abstract class FunctionResolverBase : IFunctionResolver
         if (handle == IntPtr.Zero) return false;
         var address = FindFunctionPointer(handle, functionName);
         if (address == IntPtr.Zero) return false;
-        handler = (T)GetDelegateForFunctionPointerInternal(address,typeof(T));
+        handler = (T)GetDelegateForFunctionPointerInternal(address, typeof(T));
         return true;
     }
 
-    public T? GetFunctionDelegate<T>(string libraryPath, string functionName, bool throwOnError = true) 
+    public T? GetFunctionDelegate<T>(string libraryPath, string functionName, bool throwOnError = true)
         where T : Delegate =>
         GetFunctionDelegate<T>(GetOrLoadLibrary(libraryPath, throwOnError), functionName, throwOnError);
 
@@ -46,8 +47,8 @@ public abstract class FunctionResolverBase : IFunctionResolver
     {
         var functionPointer = FindFunctionPointer(nativeLibraryHandle, functionName);
         if (functionPointer != IntPtr.Zero) return (T)GetDelegateForFunctionPointerInternal(functionPointer, typeof(T));
-        if (throwOnError) throw new EntryPointNotFoundException($"Could not find the entrypoint for {functionName}.");
-        return null;
+        if (!throwOnError) return null;
+        throw new EntryPointNotFoundException($"Could not find the entry point for [ {functionName} ].");
     }
 
     private IntPtr GetOrLoadLibrary(string libraryPath, bool throwOnError)
@@ -59,7 +60,14 @@ public abstract class FunctionResolverBase : IFunctionResolver
             if (loadedLibraries.TryGetValue(libraryPath, out ptr)) return ptr;
             ptr = LoadNativeLibrary(libraryPath);
             if (ptr != IntPtr.Zero) loadedLibraries.Add(libraryPath, ptr);
-            else if (throwOnError) throw new DllNotFoundException($"Could not found dll locates at : {libraryPath}");
+            else if (throwOnError)
+            {
+                var err = Marshal.GetLastWin32Error();
+                throw err != 0
+                    ? new Win32Exception(err)
+                    : new DllNotFoundException($"Could not load dll locates at : [ {libraryPath} ]");
+            }
+
             return ptr;
         }
     }

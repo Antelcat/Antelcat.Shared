@@ -1,5 +1,6 @@
-﻿using Antelcat.Implements;
-using Antelcat.Shared.NET.Interfaces;
+﻿using System.Runtime.InteropServices;
+using Antelcat.Implements;
+using Antelcat.Interfaces;
 #if !NET && !NETSTANDARD
 using System;
 using System.IO;
@@ -47,4 +48,10 @@ public static class NativeExtension
         out T? handler)
         where T : Delegate =>
         TryGetFunctionDelegate(fileInfo.FullName, functionName, out handler);
+
+
+    public static IntPtr ToPointer(this Delegate @delegate) => Marshal.GetFunctionPointerForDelegate(@delegate);
+
+    public static TDelegate ToDelegate<TDelegate>(this IntPtr pointer) =>
+        Marshal.GetDelegateForFunctionPointer<TDelegate>(pointer);
 }

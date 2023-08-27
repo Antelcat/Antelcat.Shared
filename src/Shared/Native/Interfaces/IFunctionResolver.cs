@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System;
 
-namespace Antelcat.Shared.NET.Interfaces;
+namespace Antelcat.Interfaces;
 
 public interface IFunctionResolver
 {

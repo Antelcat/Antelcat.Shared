@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Antelcat.Extensions;
 using Antelcat.Implements;
-using Antelcat.Shared.NET.Interfaces;
 using NUnit.Framework;
 
 namespace Antelcat.Shared.Test.NET_Framework
