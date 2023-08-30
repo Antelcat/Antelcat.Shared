@@ -41,4 +41,11 @@ public static partial class TypeExtension
     /// <returns></returns>
     public static T? NewInstance<T>() => Activator.CreateInstance<T>();
 
+    /// <summary>
+    /// 创建一个对象
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static T? NewInstance<T>(this Type type) => (T?)Activator.CreateInstance(type);
+
 }
