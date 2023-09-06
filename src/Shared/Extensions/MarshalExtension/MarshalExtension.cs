@@ -15,19 +15,13 @@ public static partial class MarshalExtension
             : BitConverter.GetBytes((long)ptr);
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static unsafe byte* ToPointer(this byte[] bytes)
+    public static unsafe T* ToPointer<T>(this T[] array) where T : unmanaged
     {
-        fixed (byte* p = bytes) return p;
+        fixed (T* p = array) return p;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IntPtr ToIntPtr(this byte[] bytes)
-    {
-        unsafe
-        {
-            return (IntPtr)bytes.ToPointer();
-        }
-    }
+    public static IntPtr ToIntPtr<T>(this T[] array, int index = 0) => Marshal.UnsafeAddrOfPinnedArrayElement(array, index);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IntPtr CopyToIntPtr(this byte[] bytes)
