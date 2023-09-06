@@ -9,6 +9,9 @@ namespace Antelcat.Extensions;
 public static partial class MarshalExtension
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static unsafe T* Pointer<T>(this T target) where T : unmanaged => &target;
+    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte[] ToBytes(this IntPtr ptr) => 
         IntPtr.Size == sizeof(int) 
             ? BitConverter.GetBytes((int)ptr) 
