@@ -6,11 +6,12 @@ namespace Antelcat.Enums;
 [Flags]
 public enum SerializeOptions
 {
-    None           = 0b000,
-    LowerCamelCase = 0b001,
-    EnumToString   = 0b010,
-    DateTimeToLong = 0b100,
-    Default        = 0b101,
+    None           = 0b0000,
+    LowerCamelCase = 0b0001,
+    EnumToString   = 0b0010,
+    DateTimeToLong = 0b0100,
+    WriteIndented  = 0b1000,
+    Default        = 0b0101,
         
-    All            = 0b111,
+    All            = 0b1111,
 }

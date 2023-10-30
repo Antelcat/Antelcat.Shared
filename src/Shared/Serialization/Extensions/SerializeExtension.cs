@@ -12,11 +12,7 @@ public static partial class SerializeExtension
 
     private static JsonSerializerOptions Default => new()
     {
-#if DEBUG
-        WriteIndented = true,
-#else
         WriteIndented = false,
-#endif
         PropertyNameCaseInsensitive = true,
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
     };
@@ -44,6 +40,8 @@ public static partial class SerializeExtension
         {
             ret.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         }
+
+        ret.WriteIndented = options.HasFlag(SerializeOptions.WriteIndented);
             
         Cache[options] = ret;
         return ret;
