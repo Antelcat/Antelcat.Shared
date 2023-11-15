@@ -54,20 +54,8 @@ public static partial class StringExtension
     /// <param name="str">字符串</param>
     /// <returns></returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static
-#if NETSTANDARD2_1_OR_GREATER || NET
-        ReadOnlySpan<byte>
-#else
-            byte[]
-#endif
-            GetBytes(this string str) => Encoding.UTF8.GetBytes(str);
+    public static byte[] GetBytes(this string str) => Encoding.UTF8.GetBytes(str);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static 
-#if NETSTANDARD2_1_OR_GREATER || NET
-        ReadOnlySpan<byte> 
-#else
-        byte[]
-#endif
-        GetBytes(this string str, Encoding encoding) => encoding.GetBytes(str);
+    public static byte[]GetBytes(this string str, Encoding encoding) => encoding.GetBytes(str);
 }
