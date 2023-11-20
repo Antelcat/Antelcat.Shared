@@ -53,13 +53,13 @@ public static partial class ServiceExtension
                     },
                     OnChallenge = async context =>
                     {
-                        if (config.OnChallenge == null) return;
+                        if (config.OnFailed == null) return;
                         context.HandleResponse();
                         context.Response.Clear();
                         context.Response.Headers.Clear();
                         context.Response.ContentType = "application/json";
                         context.Response.StatusCode  = StatusCodes.Status401Unauthorized;
-                        await context.Response.WriteAsync(config.OnChallenge(context));
+                        await context.Response.WriteAsync(config.OnFailed(context));
                     }
                 };
             });

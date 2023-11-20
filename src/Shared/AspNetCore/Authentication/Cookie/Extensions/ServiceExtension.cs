@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Mime;
+using Antelcat.Server.Utils;
 using Antelcat.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -13,14 +14,10 @@ namespace Antelcat.Extensions;
 
 public static partial class ServiceExtension
 {
-    public static IServiceCollection ConfigureCookie<TIdentity>(
+    public static IServiceCollection ConfigureCookie(
         this IServiceCollection services,
         string scheme = CookieAuthenticationDefaults.AuthenticationScheme,
-        Action<CookieBuilder>? configure = null,
-        Func<TIdentity,  CookieValidatePrincipalContext, Task>? validation = null,
-        Func<RedirectContext<CookieAuthenticationOptions>, string>? denied = null,
-        Func<RedirectContext<CookieAuthenticationOptions>, string>? failed = null)
-        where TIdentity : class
+        Action<CookieConfigure>? configure = null)
     {
         services
             .AddAuthentication()
@@ -28,48 +25,39 @@ public static partial class ServiceExtension
             {
                 o.Cookie.SameSite = SameSiteMode.None;
                 o.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-                configure?.Invoke(o.Cookie);
+                var config = new CookieConfigure();
+                configure?.Invoke(config);
+                o.Cookie = config;
                 o.Events = new CookieAuthenticationEvents
                 {
-                    OnValidatePrincipal =
-                        validation == null
-                            ? static _ => Task.CompletedTask
-                            : async context =>
-                            {
-                                await validation.Invoke(typeof(TIdentity).RawInstance<TIdentity>()
-                                    .FromClaims(context.HttpContext.User.Claims), context);
-                            },
+                    OnValidatePrincipal = config.OnValidate,
                     OnRedirectToAccessDenied = async context =>
                     {
-                        if (denied == null) return;
+                        if (config.OnDenied == null) return;
                         context.Response.Clear();
                         context.Response.Headers.Clear();
                         context.Response.ContentType = MediaTypeNames.Application.Json;
                         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                        await context.Response.WriteAsync(denied(context));
+                        await context.Response.WriteAsync(config.OnDenied(context));
                     },
                     OnRedirectToLogin = async context =>
                     {
-                        if (failed == null) return;
+                        if (config.OnFailed == null) return;
                         context.Response.Clear();
                         context.Response.Headers.Clear();
                         context.Response.ContentType = MediaTypeNames.Application.Json;
                         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                        await context.Response.WriteAsync(failed(context));
+                        await context.Response.WriteAsync(config.OnFailed(context));
                     }
                 };
             });
         return services;
     }
 
-    public static IServiceCollection ConfigureSharedCookie<TIdentity>(
+    public static IServiceCollection ConfigureSharedCookie(
         this IServiceCollection services,
         string scheme = CookieAuthenticationDefaults.AuthenticationScheme,
-        Action<CookieBuilder>? configure = null,
-        Func<TIdentity, CookieValidatePrincipalContext, Task>? validation = null,
-        Func<RedirectContext<CookieAuthenticationOptions>, string>? denied = null,
-        Func<RedirectContext<CookieAuthenticationOptions>, string>? failed = null)
-        where TIdentity : class
+        Action<CookieConfigure>? configure = null)
     {
         services
             .AddDataProtection()
@@ -78,6 +66,6 @@ public static partial class ServiceExtension
         {
             c.Name = ".AspNet.SharedCookie";
             configure?.Invoke(c);
-        }, validation, denied, failed);
+        });
     }
 }

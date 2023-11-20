@@ -33,7 +33,7 @@ public class JwtConfigure
     public Func<MessageReceivedContext, Task>       OnReceived  { get; set; } = _ => Task.CompletedTask;
     public Func<TokenValidatedContext, Task>        OnValidated { get; set; } = _ => Task.CompletedTask;
     public Func<ForbiddenContext, string>?          OnForbidden { get; set; }
-    public Func<JwtBearerChallengeContext, string>? OnChallenge { get; set; }
+    public Func<JwtBearerChallengeContext, string>? OnFailed { get; set; }
     
     
     internal JwtSecurityToken GetToken(IEnumerable<Claim?> claims) => new(
