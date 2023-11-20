@@ -4,16 +4,18 @@ using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using Antelcat.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Antelcat.Utils;
 
-public class JwtConfigure<TIdentity> where TIdentity : class
+
+public class JwtConfigure
 {
-    public JwtConfigure()
+    internal JwtConfigure()
     {
         Secret = Guid.NewGuid().ToString();
     }
-  
+
     public string Secret { set => SecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(value)); }
 
     private SecurityKey? SecurityKey
@@ -28,7 +30,13 @@ public class JwtConfigure<TIdentity> where TIdentity : class
     private SecurityKey? securityKey;
     private SigningCredentials? credentials;
 
-    private JwtSecurityToken GetToken(IEnumerable<Claim?> claims) => new(
+    public Func<MessageReceivedContext, Task>       OnReceived  { get; set; } = _ => Task.CompletedTask;
+    public Func<TokenValidatedContext, Task>        OnValidated { get; set; } = _ => Task.CompletedTask;
+    public Func<ForbiddenContext, string>?          OnForbidden { get; set; }
+    public Func<JwtBearerChallengeContext, string>? OnChallenge { get; set; }
+    
+    
+    internal JwtSecurityToken GetToken(IEnumerable<Claim?> claims) => new(
         Parameters.ValidIssuer,
         Parameters.ValidAudience,
         claims,
@@ -47,18 +55,28 @@ public class JwtConfigure<TIdentity> where TIdentity : class
             ValidateIssuerSigningKey = true,
             ClockSkew = TimeSpan.Zero
         };
-
-    private readonly JwtSecurityTokenHandler handler = new();
     private TokenValidationParameters? parameters;
-    public string? CreateToken(TIdentity source)
+
+    internal readonly JwtSecurityTokenHandler Handler = new();
+}
+
+[Serializable]
+public class JwtConfigure<TIdentity>(JwtConfigureFactory factory) where TIdentity : class
+{
+    private (string scheme, JwtConfigure configure)? cache;
+
+    public string CreateToken(TIdentity source, string scheme = JwtBearerDefaults.AuthenticationScheme)
     {
-        try
+        if (cache?.scheme == scheme)
         {
-            return handler.WriteToken(GetToken(source.GetClaims()));
+            var conf = cache.Value.configure;
+            return conf.Handler.WriteToken(conf.GetToken(source.GetClaims()));
         }
-        catch
-        {
-            return null;
-        }
+
+        if (!factory.Configs.TryGetValue(scheme, out var configure))
+            throw new ArgumentOutOfRangeException($"Scheme {scheme} not configured");
+
+        cache = (scheme, configure);
+        return configure.Handler.WriteToken(configure.GetToken(source.GetClaims()));
     }
 }

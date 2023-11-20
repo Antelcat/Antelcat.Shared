@@ -12,5 +12,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\JwtExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ServiceExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\JwtConfigure.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\JwtConfigureFactory.cs" />
   </ItemGroup>
 </Project>
