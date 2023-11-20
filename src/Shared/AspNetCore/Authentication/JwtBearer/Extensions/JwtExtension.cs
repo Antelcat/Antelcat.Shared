@@ -10,7 +10,7 @@ public static class JwtExtension
         .Claims
         .Aggregate(identity, ClaimExtension<TIdentity>.SetFromClaim);
 
-    internal static TIdentity FromClaims<TIdentity>(this TIdentity identity, IEnumerable<Claim> claims)
+    public static TIdentity FromClaims<TIdentity>(this TIdentity identity, IEnumerable<Claim> claims)
         where TIdentity : class =>
         ClaimExtension<TIdentity>.FromClaims(identity, claims);
 
