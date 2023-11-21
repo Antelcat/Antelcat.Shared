@@ -15,6 +15,7 @@ public static partial class SerializeExtension
         WriteIndented = false,
         PropertyNameCaseInsensitive = true,
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        AllowTrailingCommas = true
     };
     
     private static readonly Dictionary<SerializeOptions, JsonSerializerOptions> Cache = new()
@@ -41,8 +42,8 @@ public static partial class SerializeExtension
             ret.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         }
 
-        ret.WriteIndented = options.HasFlag(SerializeOptions.WriteIndented);
-            
+        ret.WriteIndented       = options.HasFlag(SerializeOptions.WriteIndented);
+        
         Cache[options] = ret;
         return ret;
     }

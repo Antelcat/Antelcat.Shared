@@ -5,6 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+        <LangVersion>preview</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -39,6 +40,7 @@
     <Import Project="..\..\Shared\Compare\Antelcat.Shared.Compare.projitems" Label="Shared" />
     <Import Project="..\..\Shared\Native\Antelcat.Shared.Native.projitems" Label="Shared" />
     <Import Project="..\..\Shared\AspNetCore\Authentication\Cookie\Antelcat.Shared.AspNetCore.Authentication.Cookie.projitems" Label="Shared" />
+    <Import Project="..\..\Shared\Exceptions\Antelcat.Shared.Exceptions.projitems" Label="Shared" />
 
  
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -58,4 +59,28 @@ public static partial class StringExtension
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte[]GetBytes(this string str, Encoding encoding) => encoding.GetBytes(str);
+    
+    public static StringBuilder AppendForEach<T>(this StringBuilder builder, 
+        IEnumerable<T> enumerable, 
+        Func<T, string> func)
+    {
+        foreach (var item in enumerable)
+        {
+            builder.Append(func(item));
+        }
+
+        return builder;
+    }
+    
+    public static StringBuilder AppendLineForEach<T>(this StringBuilder builder, 
+        IEnumerable<T> enumerable, 
+        Func<T, string> func)
+    {
+        foreach (var item in enumerable)
+        {
+            builder.AppendLine(func(item));
+        }
+
+        return builder;
+    }
 }

@@ -8,7 +8,9 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting;
 using System.Threading.Tasks;
+using Antelcat.Exceptions;
 using Antelcat.Extensions;
 using Antelcat.Implements;
 using Antelcat.Implements.Converters;
@@ -171,6 +173,19 @@ class SharedTest
         }
         foreach(var item in list.WithIndex()){
             Console.WriteLine(item);
+        }
+    }
+
+    [Test]
+    public void TestException()
+    {
+        try
+        {
+            throw new StackTraceException();
+        }
+        catch (StackTraceException ex)
+        {
+            Debugger.Break();
         }
     }
 }

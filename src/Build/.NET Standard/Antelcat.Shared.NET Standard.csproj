@@ -32,5 +32,6 @@
     <Import Project="..\..\Shared\Extensions\TypeExtension\Antelcat.Shared.Extensions.TypeExtension.projitems" Label="Shared" />
     <Import Project="..\..\Shared\Compare\Antelcat.Shared.Compare.projitems" Label="Shared" />
     <Import Project="..\..\Shared\Native\Antelcat.Shared.Native.projitems" Label="Shared" />
+    <Import Project="..\..\Shared\Exceptions\Antelcat.Shared.Exceptions.projitems" Label="Shared" />
 
 </Project>
