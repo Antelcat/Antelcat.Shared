@@ -20,7 +20,7 @@ public class ExceptionHandlerFilter(ILogger<ExceptionHandlerFilter> logger) : IA
         if (context.HttpContext.Response.HasStarted) return;
         switch (context.Exception)
         {
-            case ServerException exception:
+            case RejectException exception:
                 await Handle(context.HttpContext, exception);
                 break;
             default:
@@ -32,7 +32,7 @@ public class ExceptionHandlerFilter(ILogger<ExceptionHandlerFilter> logger) : IA
         logger.LogError("{Exception}", context.Exception);
     }
 
-    private static async Task Handle(HttpContext context, ServerException exception)
+    private static async Task Handle(HttpContext context, RejectException exception)
     {
         context.Response.StatusCode  = exception.StatusCode;
         switch (exception.Data)

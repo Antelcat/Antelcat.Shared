@@ -3,33 +3,33 @@ using Antelcat.Exceptions;
 
 namespace Antelcat.Server.Exceptions;
 
-public class ServerException : StackTraceException
+public class RejectException : StackTraceException
 {
     public new object? Data { get; init; }
 
     public int StatusCode { get; init; } = (int)HttpStatusCode.InternalServerError;
 
-    public ServerException(string? message = null) : base(message) { }
+    public RejectException(string? message = null) : base(message) { }
 
-    public static implicit operator ServerException(HttpStatusCode statusCode) => (int)statusCode;
-    public static implicit operator ServerException(int statusCode)
+    public static implicit operator RejectException(HttpStatusCode statusCode) => (int)statusCode;
+    public static implicit operator RejectException(int statusCode)
         => new()
         {
             StatusCode = statusCode
         };
     
-    public static implicit operator ServerException((HttpStatusCode statusCode, object? responseData) tuple)
+    public static implicit operator RejectException((HttpStatusCode statusCode, object? responseData) tuple)
         => ((int)tuple.statusCode, tuple.responseData);
-    public static implicit operator ServerException((int statusCode, object? responseData) tuple)
+    public static implicit operator RejectException((int statusCode, object? responseData) tuple)
         => new()
         {
             StatusCode = tuple.statusCode,
             Data       = tuple.responseData
         };
     
-    public static implicit operator ServerException((HttpStatusCode statusCode, object? responseData, string message) tuple)
+    public static implicit operator RejectException((HttpStatusCode statusCode, object? responseData, string message) tuple)
         => ((int)tuple.statusCode, tuple.responseData, tuple.message);
-    public static implicit operator ServerException((int statusCode, object? responseData, string message) tuple)
+    public static implicit operator RejectException((int statusCode, object? responseData, string message) tuple)
         => new(tuple.message)
         {
             StatusCode = tuple.statusCode,
