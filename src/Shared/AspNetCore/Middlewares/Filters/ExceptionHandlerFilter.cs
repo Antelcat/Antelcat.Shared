@@ -11,10 +11,10 @@ using Microsoft.Extensions.Logging;
 namespace Antelcat.Server.Filters;
 
 [Serializable]
-public class ExceptionHandlerFilter(IAntelcatLogger<ExceptionHandlerFilter> logger) : IAsyncExceptionFilter
+public class ExceptionHandlerFilter(ILogger<ExceptionHandlerFilter> logger) : IAsyncExceptionFilter
 {
-    private readonly ILogger<ExceptionHandlerFilter> logger = logger;
-
+    private readonly ILogger<ExceptionHandlerFilter> logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    
     public async Task OnExceptionAsync(ExceptionContext context)
     {
         if (context.HttpContext.Response.HasStarted) return;

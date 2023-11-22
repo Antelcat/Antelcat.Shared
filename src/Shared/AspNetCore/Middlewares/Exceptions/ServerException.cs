@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using Antelcat.Exceptions;
-using Antelcat.Extensions;
 
 namespace Antelcat.Server.Exceptions;
 
