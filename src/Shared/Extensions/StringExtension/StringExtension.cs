@@ -46,6 +46,14 @@ public static partial class StringExtension
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool ToBool(this string? str) => bool.TryParse(str, out var result) && result;
 
+#if NET || NETFRAMEWORK
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool ToIntPtr(this string? str, out nint result) => nint.TryParse(str,out result);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static nint ToIntPtr(this string? str) => nint.TryParse(str, out var result) ? result : nint.Zero;
+#endif
+    
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string Format(this string str, params object[] args) => string.Format(str, args);
 

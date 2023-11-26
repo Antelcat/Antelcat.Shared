@@ -9,19 +9,25 @@
 <#@ import namespace="System.Xml.Linq" #>
 <#@ output extension=".cs" #>
 <#
+#nullable enable
 	const string Namespace = "Antelcat.Extensions";
-	Dictionary<string,string> dic = new (){
-		{ "sbyte", "MinValue" },
-		{ "byte", "MinValue" },
-		{ "int", "MinValue" }, 
-		{ "uint", "MinValue" },
-		{ "long", "MinValue" },
-		{ "ulong", "MinValue" },
-		{ "double", "NaN" }, 
-		{ "float", "NaN" }, 
-		{ "DateTime", "MinValue" },
-		{ "Guid", "Empty" }
-	}; 
+	List<(string Type,string? Value,string? Name)> dic = new()
+	{
+		("char", "'\\0'" , null),
+		("sbyte", "{0}.MinValue" , "SByte"),
+		("byte", "{0}.MinValue" , null),
+		("short", "{0}.MinValue" , null),
+		("ushort", "{0}.MinValue" , "UShort"),
+		("int", "{0}.MinValue" , null),
+		("uint", "{0}.MinValue" , "UInt"),
+		("long", "{0}.MinValue" , null),
+		("ulong", "{0}.MinValue" , "ULong"),
+		("double", "{0}.NaN" , null),
+		("float", "{0}.NaN" , null),
+		("DateTime", "{0}.MinValue" , null),
+		("Guid", "{0}.Empty" , null),
+		("Version", null , null),
+	};
 #>
 #if !NET && !NETSTANDARD
 using System;
@@ -32,16 +38,15 @@ namespace <#=Namespace#>;
 public static partial class StringExtension
 {
 <# 
-foreach(var pair in dic) {
-	var type = pair.Key;
-	var name = $"{type[0].ToString().ToUpper()}{type.Substring(1)}";
+foreach(var (Type,Value,Name) in dic) {
+	var name = Name ?? $"{Type[0].ToString().ToUpper()}{Type.Substring(1)}";
 	var resultArg = "result";
 #>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static bool To<#=name#>(this string? str,out <#=type#> <#=resultArg#>) => <#=type#>.TryParse(str,out <#=resultArg#>);
+	public static bool To<#=name#>(this string? str, out <#=Type#> <#=resultArg#>) => <#=Type#>.TryParse(str, out <#=resultArg#>);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static <#=type#> To<#=name#>(this string? str) => <#=type#>.TryParse(str,out var <#=resultArg#>) ? <#=resultArg#> : <#=type#>.<#=pair.Value#>;
+	public static <#=Type#> To<#=name#>(this string? str) => <#=Type#>.TryParse(str, out var <#=resultArg#>) ? <#=resultArg#> : <#=Value is null ? "new()" : $"{string.Format(Value,Type)}"#>;
 
 <# 
 }

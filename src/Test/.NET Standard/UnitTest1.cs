@@ -19,9 +19,9 @@ namespace Antelcat.Shared.Test.NET_Standard
         [Test]
         public void Test1()
         {
-            var ctor = typeof(TestClass).GetConstructor(new[] { typeof(int) });
-            var del = ctor!.CreateCtor();
-            var instance = del.Invoke(1);
+            var  ctor     = typeof(TestClass).GetConstructor(new[] { typeof(int) });
+            var  del      = ctor!.CreateCtor();
+            var  instance = del.Invoke(1);
             Assert.Pass();          
         }
     }

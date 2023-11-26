@@ -5,20 +5,25 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".cs" #>
 <#
+#nullable enable
 	const string Namespace = "Antelcat.Implements.Converters";
-	var list = new List<string>()
+	var list = new List<(string type,string? method)>
 	{
-		"sbyte",
-		"byte",
-		"bool",
-		"int",
-		"uint",
-		"long",
-		"ulong",
-		"double",
-		"float",
-		"DateTime",
-		"Guid"
+		("char",null),
+		("sbyte","SByte"),
+		("byte",null),
+		("bool",null),
+		("int",null),
+		("uint","UInt"),
+		("short",null),
+		("ushort","UShort"),
+		("long",null),
+		("ulong","ULong"),
+		("double",null),
+		("float",null),
+		("DateTime",null),
+		("Guid",null),
+		("Version",null),
 	};
 	var classes = new Dictionary<string,string>();
 #>
@@ -33,8 +38,8 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 namespace <#=Namespace#>;
 <# 
-foreach(var type in list) { 
-	var name = $"{type[0].ToString().ToUpper()}{type.Substring(1)}";
+foreach(var (type,method) in list) { 
+	var name = method ?? $"{type[0].ToString().ToUpper()}{type.Substring(1)}";
 	var className = $"StringTo{name}Converter";
 	classes.Add(type,className);
 #>
@@ -54,7 +59,7 @@ public class <#=className#> : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value.ToString();
+		object? value) => value?.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 

@@ -9,22 +9,49 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 namespace Antelcat.Implements.Converters;
 ///<summary>
-/// Convert between <see cref="string"/> and <see cref="sbyte"/>
+/// Convert between <see cref="string"/> and <see cref="char"/>
 ///</summary>
-public class StringToSbyteConverter : TypeConverter
+public class StringToCharConverter : TypeConverter
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public override object ConvertTo(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
 		object? value, 
-		Type ___) => (value as string).ToSbyte();
+		Type ___) => (value as string).ToChar();
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value.ToString();
+		object? value) => value?.ToString();
+
+   	public override bool CanConvertTo(
+		ITypeDescriptorContext? _, 
+		Type? destinationType) => destinationType == typeof(char);
+
+   	public override bool CanConvertFrom(
+		ITypeDescriptorContext? _, 
+		Type sourceType) => sourceType == typeof(char);
+}
+
+///<summary>
+/// Convert between <see cref="string"/> and <see cref="sbyte"/>
+///</summary>
+public class StringToSByteConverter : TypeConverter
+{
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public override object ConvertTo(
+		ITypeDescriptorContext? _, 
+		CultureInfo? __, 
+		object? value, 
+		Type ___) => (value as string).ToSByte();
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+   	public override object? ConvertFrom(
+		ITypeDescriptorContext? _, 
+		CultureInfo? __, 
+		object? value) => value?.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -51,7 +78,7 @@ public class StringToByteConverter : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value.ToString();
+		object? value) => value?.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -78,7 +105,7 @@ public class StringToBoolConverter : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value.ToString();
+		object? value) => value?.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -105,7 +132,7 @@ public class StringToIntConverter : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value.ToString();
+		object? value) => value?.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -119,20 +146,20 @@ public class StringToIntConverter : TypeConverter
 ///<summary>
 /// Convert between <see cref="string"/> and <see cref="uint"/>
 ///</summary>
-public class StringToUintConverter : TypeConverter
+public class StringToUIntConverter : TypeConverter
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public override object ConvertTo(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
 		object? value, 
-		Type ___) => (value as string).ToUint();
+		Type ___) => (value as string).ToUInt();
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value.ToString();
+		object? value) => value?.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -141,6 +168,60 @@ public class StringToUintConverter : TypeConverter
    	public override bool CanConvertFrom(
 		ITypeDescriptorContext? _, 
 		Type sourceType) => sourceType == typeof(uint);
+}
+
+///<summary>
+/// Convert between <see cref="string"/> and <see cref="short"/>
+///</summary>
+public class StringToShortConverter : TypeConverter
+{
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public override object ConvertTo(
+		ITypeDescriptorContext? _, 
+		CultureInfo? __, 
+		object? value, 
+		Type ___) => (value as string).ToShort();
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+   	public override object? ConvertFrom(
+		ITypeDescriptorContext? _, 
+		CultureInfo? __, 
+		object? value) => value?.ToString();
+
+   	public override bool CanConvertTo(
+		ITypeDescriptorContext? _, 
+		Type? destinationType) => destinationType == typeof(short);
+
+   	public override bool CanConvertFrom(
+		ITypeDescriptorContext? _, 
+		Type sourceType) => sourceType == typeof(short);
+}
+
+///<summary>
+/// Convert between <see cref="string"/> and <see cref="ushort"/>
+///</summary>
+public class StringToUShortConverter : TypeConverter
+{
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public override object ConvertTo(
+		ITypeDescriptorContext? _, 
+		CultureInfo? __, 
+		object? value, 
+		Type ___) => (value as string).ToUShort();
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+   	public override object? ConvertFrom(
+		ITypeDescriptorContext? _, 
+		CultureInfo? __, 
+		object? value) => value?.ToString();
+
+   	public override bool CanConvertTo(
+		ITypeDescriptorContext? _, 
+		Type? destinationType) => destinationType == typeof(ushort);
+
+   	public override bool CanConvertFrom(
+		ITypeDescriptorContext? _, 
+		Type sourceType) => sourceType == typeof(ushort);
 }
 
 ///<summary>
@@ -159,7 +240,7 @@ public class StringToLongConverter : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value.ToString();
+		object? value) => value?.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -173,20 +254,20 @@ public class StringToLongConverter : TypeConverter
 ///<summary>
 /// Convert between <see cref="string"/> and <see cref="ulong"/>
 ///</summary>
-public class StringToUlongConverter : TypeConverter
+public class StringToULongConverter : TypeConverter
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public override object ConvertTo(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
 		object? value, 
-		Type ___) => (value as string).ToUlong();
+		Type ___) => (value as string).ToULong();
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value.ToString();
+		object? value) => value?.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -213,7 +294,7 @@ public class StringToDoubleConverter : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value.ToString();
+		object? value) => value?.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -240,7 +321,7 @@ public class StringToFloatConverter : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value.ToString();
+		object? value) => value?.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -267,12 +348,11 @@ public class StringToDateTimeConverter : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value.ToString();
+		object? value) => value?.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
 		Type? destinationType) => destinationType == typeof(DateTime);
-
    	public override bool CanConvertFrom(
 		ITypeDescriptorContext? _, 
 		Type sourceType) => sourceType == typeof(DateTime);
@@ -294,7 +374,7 @@ public class StringToGuidConverter : TypeConverter
    	public override object? ConvertFrom(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
-		object value) => value.ToString();
+		object? value) => value?.ToString();
 
    	public override bool CanConvertTo(
 		ITypeDescriptorContext? _, 
@@ -305,22 +385,53 @@ public class StringToGuidConverter : TypeConverter
 		Type sourceType) => sourceType == typeof(Guid);
 }
 
+///<summary>
+/// Convert between <see cref="string"/> and <see cref="Version"/>
+///</summary>
+public class StringToVersionConverter : TypeConverter
+{
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public override object ConvertTo(
+		ITypeDescriptorContext? _, 
+		CultureInfo? __, 
+		object? value, 
+		Type ___) => (value as string).ToVersion();
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+   	public override object? ConvertFrom(
+		ITypeDescriptorContext? _, 
+		CultureInfo? __, 
+		object? value) => value?.ToString();
+
+   	public override bool CanConvertTo(
+		ITypeDescriptorContext? _, 
+		Type? destinationType) => destinationType == typeof(Version);
+
+   	public override bool CanConvertFrom(
+		ITypeDescriptorContext? _, 
+		Type sourceType) => sourceType == typeof(Version);
+}
+
 
 public static class StringValueConverters
 {
 	private static readonly Dictionary<Type,TypeConverter> Instances = new ()
 	{
-		{ typeof(sbyte) , new StringToSbyteConverter() },
+		{ typeof(char) , new StringToCharConverter() },
+		{ typeof(sbyte) , new StringToSByteConverter() },
 		{ typeof(byte) , new StringToByteConverter() },
 		{ typeof(bool) , new StringToBoolConverter() },
 		{ typeof(int) , new StringToIntConverter() },
-		{ typeof(uint) , new StringToUintConverter() },
+		{ typeof(uint) , new StringToUIntConverter() },
+		{ typeof(short) , new StringToShortConverter() },
+		{ typeof(ushort) , new StringToUShortConverter() },
 		{ typeof(long) , new StringToLongConverter() },
-		{ typeof(ulong) , new StringToUlongConverter() },
+		{ typeof(ulong) , new StringToULongConverter() },
 		{ typeof(double) , new StringToDoubleConverter() },
 		{ typeof(float) , new StringToFloatConverter() },
 		{ typeof(DateTime) , new StringToDateTimeConverter() },
 		{ typeof(Guid) , new StringToGuidConverter() },
+		{ typeof(Version) , new StringToVersionConverter() },
 	};
 
 	public static bool FindByType(Type type, out TypeConverter? converter) 

@@ -19,6 +19,19 @@
       <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Update="..\..\Shared\Extensions\StringExtension\StringExtension.g.tt">
+        <Generator>TextTemplatingFileGenerator</Generator>
+        <LastGenOutput>StringExtension.g.cs</LastGenOutput>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="..\..\Shared\Extensions\StringExtension\StringExtension.g.cs">
+        <DependentUpon>StringExtension.g.tt</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
     <Import Project="..\..\Shared\Extensions\EnumExtension\Antelcat.Shared.Extensions.EnumExtension.projitems" Label="Shared" />
     <Import Project="..\..\Shared\Extensions\LinqExtension\Antelcat.Shared.Extensions.LinqExtension.projitems" Label="Shared" />
     <Import Project="..\..\Shared\Extensions\ServiceExtension\Antelcat.Shared.Extensions.ServiceExtension.projitems" Label="Shared" />
