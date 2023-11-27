@@ -5,9 +5,9 @@ namespace Antelcat.Server.Extensions;
 
 public partial class ServiceExtension
 {
-    public static IMvcBuilder AddAntelcatControllers(this IServiceCollection collection)
+    public static IMvcBuilder AddAntelcatFilters(this IMvcBuilder builder)
     {
-        return collection.AddControllers(x =>
+        return builder.AddMvcOptions(x =>
         {
             x.Filters.Add<ExceptionHandlerFilter>();
         });
