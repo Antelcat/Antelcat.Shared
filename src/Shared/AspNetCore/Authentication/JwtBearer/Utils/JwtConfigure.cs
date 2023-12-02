@@ -71,13 +71,13 @@ public class JwtConfigure<TIdentity>(JwtConfigureFactory factory) where TIdentit
         if (cache?.scheme == scheme)
         {
             var conf = cache.Value.configure;
-            return conf.Handler.WriteToken(conf.GetToken(source.ToClaims()));
+            return conf.Handler.WriteToken(conf.GetToken(source.GetClaims()));
         }
 
         if (!factory.Configs.TryGetValue(scheme, out var configure))
             throw new ArgumentOutOfRangeException($"Scheme {scheme} not configured");
 
         cache = (scheme, configure);
-        return configure.Handler.WriteToken(configure.GetToken(source.ToClaims()));
+        return configure.Handler.WriteToken(configure.GetToken(source.GetClaims()));
     }
 }
