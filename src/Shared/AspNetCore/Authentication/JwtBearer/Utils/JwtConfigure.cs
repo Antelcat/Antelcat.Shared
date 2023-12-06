@@ -3,8 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text;
-using Antelcat.Extensions;
-using Antelcat.Interfaces;
+using Antelcat.ClaimSerialization.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Antelcat.Utils;
