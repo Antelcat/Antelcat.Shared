@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text;
-using Antelcat.ClaimSerialization.Interfaces;
+using Antelcat.ClaimSerialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Antelcat.Utils;
@@ -61,7 +61,7 @@ public class JwtConfigure
 }
 
 [Serializable]
-public class JwtConfigure<TIdentity>(JwtConfigureFactory factory) where TIdentity : IClaimSerializable
+public class JwtConfigure<TIdentity>(JwtConfigureFactory factory)
 {
     private (string scheme, JwtConfigure configure)? cache;
 
@@ -70,13 +70,15 @@ public class JwtConfigure<TIdentity>(JwtConfigureFactory factory) where TIdentit
         if (cache?.scheme == scheme)
         {
             var conf = cache.Value.configure;
-            return conf.Handler.WriteToken(conf.GetToken(source.GetClaims()));
+            return conf.Handler.WriteToken(
+                conf.GetToken(ClaimSerializer.Serialize(source, factory.ClaimSerializerContext)));
         }
 
         if (!factory.Configs.TryGetValue(scheme, out var configure))
             throw new ArgumentOutOfRangeException($"Scheme {scheme} not configured");
 
         cache = (scheme, configure);
-        return configure.Handler.WriteToken(configure.GetToken(source.GetClaims()));
+        return configure.Handler.WriteToken(
+            configure.GetToken(ClaimSerializer.Serialize(source, factory.ClaimSerializerContext)));
     }
 }
