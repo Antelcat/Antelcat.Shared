@@ -1,11 +1,7 @@
-﻿using System.Diagnostics;
-using System.Net.Mime;
-using Antelcat.Core.Interface.Logging;
+﻿using System.Net.Mime;
 using Antelcat.Server.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Antelcat.Server.Filters;
