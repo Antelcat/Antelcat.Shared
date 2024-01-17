@@ -3,13 +3,11 @@ using Antelcat.Exceptions;
 
 namespace Antelcat.Server.Exceptions;
 
-public class RejectException : StackTraceException
+public class RejectException(string? message = null) : StackTraceException(message)
 {
     public new object? Data { get; init; }
 
     public int StatusCode { get; init; } = (int)HttpStatusCode.InternalServerError;
-
-    public RejectException(string? message = null) : base(message) { }
 
     public static implicit operator RejectException(HttpStatusCode statusCode) => (int)statusCode;
     public static implicit operator RejectException(int statusCode)

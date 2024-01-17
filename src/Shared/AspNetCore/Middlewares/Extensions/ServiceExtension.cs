@@ -23,6 +23,20 @@ public partial class ServiceExtension
     }
 
     public static IMvcBuilder AddAntelcatFilters(this IMvcBuilder builder,
+        Func<AntelcatFilterConfig> config)
+    {
+        builder.Services.AddSingleton(config());
+        return builder.AddAntelcatFiltersInternal();
+    }
+
+    public static IMvcBuilder AddAntelcatFilters(this IMvcBuilder builder,
+        Func<IServiceProvider, AntelcatFilterConfig> config)
+    {
+        builder.Services.AddSingleton(config);
+        return builder.AddAntelcatFiltersInternal();
+    }
+
+    public static IMvcBuilder AddAntelcatFilters(this IMvcBuilder builder,
         Action<AntelcatFilterConfig, IServiceProvider> config)
     {
         var filterConfig = AntelcatFilterConfig.Default;
@@ -35,5 +49,5 @@ public partial class ServiceExtension
     }
 
     private static IMvcBuilder AddAntelcatFiltersInternal(this IMvcBuilder builder) =>
-        builder.AddMvcOptions(x => { x.Filters.Add<ExceptionHandlerFilter>(); });
+        builder.AddMvcOptions(static x => { x.Filters.Add<ExceptionHandlerFilter>(); });
 }
