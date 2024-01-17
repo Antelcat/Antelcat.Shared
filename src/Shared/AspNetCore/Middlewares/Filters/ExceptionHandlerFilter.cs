@@ -56,13 +56,13 @@ public class ExceptionHandlerFilter(ILogger<ExceptionHandlerFilter> logger, Ante
                 await context.Response.WriteAsJsonAsync(exception.Data);
                 return;
         }
-
     }
 
     private async Task Handle(HttpContext context, Exception exception)
     {
         context.Response.Clear();
         context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        config.ExecuteHandler(exception, context.Response);
         await context.Response.WriteAsync(stackTraceFormatter(exception));
     }
 }
