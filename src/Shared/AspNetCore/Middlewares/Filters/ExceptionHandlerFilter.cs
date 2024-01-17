@@ -4,7 +4,6 @@ using Antelcat.Server.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Antelcat.Server.Filters;
 
@@ -63,7 +62,6 @@ public class ExceptionHandlerFilter(ILogger<ExceptionHandlerFilter> logger, Ante
     private async Task Handle(HttpContext context, Exception exception)
     {
         context.Response.Clear();
-        context.Response.Headers.Clear();
         context.Response.StatusCode = StatusCodes.Status500InternalServerError;
         await context.Response.WriteAsync(stackTraceFormatter(exception));
     }
