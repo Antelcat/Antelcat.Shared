@@ -9,8 +9,10 @@
     <Import_RootNamespace>Antelcat.Shared.AspNetCore.Middlewares</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Configs\AntelcatFilterConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\ServerException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ServiceExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Filters\AntelcatFilter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Filters\ExceptionHandlerFilter.cs" />
   </ItemGroup>
 </Project>

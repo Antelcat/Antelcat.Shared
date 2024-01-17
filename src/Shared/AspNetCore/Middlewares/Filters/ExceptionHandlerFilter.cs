@@ -1,16 +1,23 @@
 ﻿using System.Net.Mime;
+using Antelcat.Server.Configs;
 using Antelcat.Server.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Antelcat.Server.Filters;
 
 [Serializable]
-public class ExceptionHandlerFilter(ILogger<ExceptionHandlerFilter> logger) : IAsyncExceptionFilter
+public class ExceptionHandlerFilter(ILogger<ExceptionHandlerFilter> logger, AntelcatFilterConfig config)
+    : AntelcatFilter(config), IAsyncExceptionFilter
 {
     private readonly ILogger<ExceptionHandlerFilter> logger = logger ?? throw new ArgumentNullException(nameof(logger));
-    
+
+    private readonly Func<Exception, string> stackTraceFormatter = config.OutputTrace
+        ? static exception => exception.ToString()
+        : static _ => "Internal Server Error";
+
     public async Task OnExceptionAsync(ExceptionContext context)
     {
         if (context.HttpContext.Response.HasStarted) return;
@@ -23,6 +30,7 @@ public class ExceptionHandlerFilter(ILogger<ExceptionHandlerFilter> logger) : IA
                 await Handle(context.HttpContext, context.Exception);
                 break;
         }
+
         await context.HttpContext.Response.CompleteAsync();
 
         logger.LogError("{Exception}", context.Exception);
@@ -30,7 +38,7 @@ public class ExceptionHandlerFilter(ILogger<ExceptionHandlerFilter> logger) : IA
 
     private static async Task Handle(HttpContext context, RejectException exception)
     {
-        context.Response.StatusCode  = exception.StatusCode;
+        context.Response.StatusCode = exception.StatusCode;
         switch (exception.Data)
         {
             case null:
@@ -52,15 +60,11 @@ public class ExceptionHandlerFilter(ILogger<ExceptionHandlerFilter> logger) : IA
 
     }
 
-    private static async Task Handle(HttpContext context, Exception exception)
+    private async Task Handle(HttpContext context, Exception exception)
     {
         context.Response.Clear();
         context.Response.Headers.Clear();
         context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-#if DEBUG
-        await context.Response.WriteAsync(exception.ToString());
-#else
-        await context.Response.WriteAsync("Internal Server Error");
-#endif
+        await context.Response.WriteAsync(stackTraceFormatter(exception));
     }
 }
