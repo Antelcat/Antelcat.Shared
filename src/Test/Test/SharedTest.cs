@@ -159,7 +159,7 @@ class SharedTest
     public unsafe void TestNative()
     {
         var handler = new FileInfo(
-                @"D:\Shared\WorkSpace\Git\libuv-sharp\LibuvSharp\LibuvSharp.Test\bin\Debug\net7.0\runtimes\win-x64\native\libuv.dll")
+                @"D:\Shared\WorkSpace\Git\libuv-sharp\LibuvSharp\LibuvSharp.Test\bin\Debug\net8.0\runtimes\win-x64\native\libuv.dll")
             .GetFunctionDelegate<Func<nint>>("uv_version");
         var version = handler.Invoke();
     }
