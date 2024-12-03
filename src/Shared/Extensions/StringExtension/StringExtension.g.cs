@@ -85,10 +85,8 @@ public static partial class StringExtension
 	public static Guid ToGuid(this string? str) => Guid.TryParse(str, out var result) ? result : Guid.Empty;
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static bool ToVersion(this string? str, out Version result) => Version.TryParse(str, out result);
+	public static bool ToVersion(this string? str, out Version? result) => Version.TryParse(str, out result);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Version ToVersion(this string? str) => Version.TryParse(str, out var result) ? result : new();
-
-
+	public static Version? ToVersion(this string? str) => Version.TryParse(str, out var result) ? result : new();
 }
