@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 using Antelcat.Interfaces;
 
 namespace Antelcat.Implements;
-#nullable enable
+
 public abstract class FunctionResolverBase : IFunctionResolver
 {
     private readonly Dictionary<string, IntPtr> loadedLibraries = new();
@@ -38,11 +38,11 @@ public abstract class FunctionResolverBase : IFunctionResolver
         return true;
     }
 
-    public T? GetFunctionDelegate<T>(string libraryPath, string functionName, bool throwOnError = true)
+    public T? GetFunctionDelegate<T>(string libraryPath, string functionName, [DoesNotReturnIf(true)] bool throwOnError = true)
         where T : Delegate =>
         GetFunctionDelegate<T>(GetOrLoadLibrary(libraryPath, throwOnError), functionName, throwOnError);
-
-    private T? GetFunctionDelegate<T>(IntPtr nativeLibraryHandle, string functionName, bool throwOnError)
+    
+    private T? GetFunctionDelegate<T>(IntPtr nativeLibraryHandle, string functionName, [DoesNotReturnIf(true)] bool throwOnError)
         where T : Delegate
     {
         var functionPointer = FindFunctionPointer(nativeLibraryHandle, functionName);

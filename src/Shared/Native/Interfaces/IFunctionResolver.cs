@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System;
 
 namespace Antelcat.Interfaces;
 
@@ -12,7 +11,7 @@ public interface IFunctionResolver
         out T? handler)
         where T : Delegate;
 
-    T GetFunctionDelegate<T>(string libraryPath, string functionName, bool throwOnError = true) where T : Delegate;
+    T? GetFunctionDelegate<T>(string libraryPath, string functionName, [DoesNotReturnIf(true)] bool throwOnError = true) where T : Delegate;
     
     //NativeLibrary.SetDllImportResolver(typeof(LinuxFunctionResolver).Assembly, (libraryName, assembly, searchPath) =>
     //{

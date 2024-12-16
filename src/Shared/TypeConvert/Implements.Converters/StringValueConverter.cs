@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 #nullable enable
 #endif
-using Antelcat.Extensions;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using Antelcat.Extensions;
+
 namespace Antelcat.Implements.Converters;
 ///<summary>
 /// Convert between <see cref="string"/> and <see cref="char"/>
@@ -391,7 +392,7 @@ public class StringToGuidConverter : TypeConverter
 public class StringToVersionConverter : TypeConverter
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public override object ConvertTo(
+	public override object? ConvertTo(
 		ITypeDescriptorContext? _, 
 		CultureInfo? __, 
 		object? value, 
